@@ -1,0 +1,155 @@
+\documentclass[final,a4paper,openany,12pt]{mwbk}
+\pdfminorversion=7
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{tgtermes}
+\usepackage[T1]{fontenc}
+\input glyphtounicode
+\pdfgentounicode=1
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows.meta}
+\usepackage{minted}
+\usepackage{amsthm}
+\usepackage{gensymb}
+\usepackage{mathrsfs}
+\usepackage{biblatex}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{float}
+\addbibresource{ref.bib}
+
+% ustawienia do wydruku dwustronnego z uwzględnieniem dodatkowego miejsca na zszycie
+\setlength{\oddsidemargin}{0.46cm} %margines nieparzysty
+\setlength{\evensidemargin}{-0.54cm} %margines parzysty
+\setlength{\textwidth}{16cm} %szerokość tekstu na stronie
+\linespread{1.1} % lekkie zwiększenie odstępu między liniami, żeby tekst nie był taki ścisły, ponieważ
+% Odstęp pojedynczej interlinii nie jest komfortowy, kiedy trzeba czytać strony A4
+% koniec ustawień
+\fontfamily{lmr}\selectfont
+
+\begin{document}
+\newtheorem{Tw}{Twierdzenie}
+\newtheorem{Def}{Definicja}
+% instrukcja poniżej: wybór czcionki z pakietu 'lmodern' jako domyślnej
+\fontfamily{lmr}\selectfont % wybór czcionki "Latin Modern Roman"
+%\fontfamily{lmss}\selectfont % wybór czcionki "Latin Modern Sans Serif"
+
+\begin{titlepage}
+\vspace{-0.5cm}
+
+\renewcommand{\arraystretch}{1.3} % zwiększamy odległość między wierszami na stronie tytułowej
+
+\begin{center}
+{\footnotesize
+\begin{tabular}{c}
+UNIWERSYTET KARDYNAŁA STEFANA WYSZYŃSKIEGO\\
+W WARSZAWIE\\
+\end{tabular}
+}
+\vspace{2.5cm}
+
+{\footnotesize
+\begin{tabular}{c}
+WYDZIAŁ MATEMATYCZNO-PRZYRODNICZY\\
+SZKOŁA NAUK ŚCISŁYCH\\
+\end{tabular}
+}
+\vspace{2.7cm}
+
+\renewcommand{\arraystretch}{1.5} % zwiększamy odległość między wierszami
+
+{\normalsize
+\begin{tabular}{c}
+Korneliusz Pogorzelczyk\\
+
+109204\\
+
+matematyka\\
+\end{tabular}
+}
+
+\vspace{2.3cm}
+
+{\large
+\begin{tabular}{c}
+Łańcuchy Markowa
+\end{tabular}
+}
+
+\end{center}
+\vspace{4cm}
+
+\hspace{6cm}
+\begin{tabular}{l}
+Praca licencjacka\\
+
+Promotor:\\
+
+dr Tomasz Rogala
+\end{tabular}
+
+\vspace{3.5cm}
+
+{\centering
+
+{\small
+\begin{tabular}{c}
+{WARSZAWA, 2025}\\
+\end{tabular}
+}
+
+}
+
+\renewcommand{\arraystretch}{1} % przywracamy domyślną odległość miedzy wierszami na następnych stronach
+
+\end{titlepage}
+
+\chapter{Wstęp}
+
+\section{Motywacja i wprowadzenie}
+
+W dzisiejszym świecie, gdzie losowość i niepewność odgrywają kluczową rolę w wielu obszarach nauki i techniki, procesy stochastyczne stanowią fundament matematycznego opisu zjawisk losowych. Spośród różnorodnych rodzajów procesów stochastycznych łańcuchy Markowa wyróżniają się szczególną elegancją matematyczną oraz szerokim wachlarzem zastosowań praktycznych.
+
+Łańcuchy Markowa, nazwane na cześć rosyjskiego matematyka Andrieja Markowa, który wprowadził to pojęcie na początku XX wieku, charakteryzują się szczególną własnością: przyszły stan procesu zależy wyłącznie od stanu obecnego, a nie od stanów poprzednich. Ta własność (zwana brakiem pamięci lub własnością Markowa) znacząco upraszcza analizę matematyczną tych procesów, jednocześnie zachowując ich zdolność do modelowania złożonych zjawisk rzeczywistych.
+
+Zastosowania łańcuchów Markowa są niezwykle różnorodne i obejmują takie dziedziny jak:
+\begin{itemize}
+    \item Finanse i ekonomia -- modelowanie rynków finansowych, ocena ryzyka kredytowego, teoria podejmowania decyzji;
+    \item Biologia i medycyna -- modelowanie rozprzestrzeniania się chorób, analiza sekwencji DNA, badanie procesów ewolucyjnych;
+    \item Fizyka -- opis układów cząstek, mechanika statystyczna, procesy dyfuzji;
+    \item Informatyka -- algorytmy uczenia maszynowego, generowanie tekstu, kompresja danych, metoda Monte Carlo oparta na łańcuchach Markowa.
+\end{itemize}
+
+W niniejszej pracy skupimy się na łańcuchach Markowa w czasie dyskretnym, które stanowią fundamentalny i intuicyjny wariant tej klasy procesów stochastycznych. Zbadamy ich podstawowe własności teoretyczne oraz przedstawimy praktyczne zastosowanie, ilustrując teorię konkretnym przykładem implementacji.
+
+\section{Cele i zakres pracy}
+
+Głównym celem niniejszej pracy jest przedstawienie teorii łańcuchów Markowa w czasie dyskretnym oraz demonstracja ich praktycznego zastosowania. W szczególności, praca stawia sobie następujące cele:
+
+\begin{enumerate}
+    \item Zaprezentowanie niezbędnych podstaw rachunku prawdopodobieństwa, stanowiących fundament teoretyczny dla zrozumienia łańcuchów Markowa.
+    
+    \item Wprowadzenie formalnej definicji łańcuchów Markowa w czasie dyskretnym oraz szczegółowa analiza ich kluczowych własności, ze szczególnym uwzględnieniem:
+    \begin{itemize}
+        \item Klasyfikacji stanów (stany przejściowe, pochłaniające, okresowe i ergodyczne),
+        \item Zachowania długoterminowego (rozkłady stacjonarne, ergodyczność),
+        \item Czasów pierwszego przejścia i powrotu do stanów.
+    \end{itemize}
+    
+    \item Opracowanie i analiza praktycznego zastosowania łańcuchów Markowa do modelowania wybranego zjawiska wraz z implementacją obliczeniową demonstrującą kluczowe aspekty teoretyczne.
+\end{enumerate}
+
+Zakres pracy ogranicza się do łańcuchów Markowa w czasie dyskretnym, co oznacza, że stan procesu zmienia się w dyskretnych chwilach czasowych (krokach). Główny nacisk położony zostanie na łańcuchy o skończonej przestrzeni stanów, choć w wybranych miejscach wspomnimy również o przypadkach z przeliczalnie nieskończoną przestrzenią stanów, jeśli będzie to istotne dla omawianego zastosowania.
+
+Praca koncentruje się na podstawowych koncepcjach i własnościach łańcuchów Markowa, stanowiąc wprowadzenie do tego obszaru teorii procesów stochastycznych. Bardziej zaawansowane zagadnienia, takie jak uogólnienia do czasu ciągłego czy łańcuchy Markowa wyższego rzędu, wykraczają poza zakres niniejszej pracy.
+
+W kolejnych rozdziałach pracy systematycznie rozwijamy przedstawione zagadnienia, począwszy od niezbędnych podstaw probabilistycznych, poprzez formalną teorię łańcuchów Markowa, aż po praktyczne zastosowanie zilustrowane implementacją obliczeniową.
+
+\printbibliography
+
+\end{document}
