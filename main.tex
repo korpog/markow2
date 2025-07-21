@@ -35,6 +35,7 @@
 \begin{document}
 \newtheorem{Tw}{Twierdzenie}
 \newtheorem{Def}{Definicja}
+\newtheorem{Prz}{Przykład}
 % instrukcja poniżej: wybór czcionki z pakietu 'lmodern' jako domyślnej
 \fontfamily{lmr}\selectfont % wybór czcionki "Latin Modern Roman"
 %\fontfamily{lmss}\selectfont % wybór czcionki "Latin Modern Sans Serif"
@@ -141,14 +142,100 @@ Głównym celem niniejszej pracy jest przedstawienie teorii łańcuchów Markowa
         \item Czasów pierwszego przejścia i powrotu do stanów.
     \end{itemize}
     
-    \item Opracowanie i analiza praktycznego zastosowania łańcuchów Markowa do modelowania wybranego zjawiska wraz z implementacją obliczeniową demonstrującą kluczowe aspekty teoretyczne.
 \end{enumerate}
 
 Zakres pracy ogranicza się do łańcuchów Markowa w czasie dyskretnym, co oznacza, że stan procesu zmienia się w dyskretnych chwilach czasowych (krokach). Główny nacisk położony zostanie na łańcuchy o skończonej przestrzeni stanów, choć w wybranych miejscach wspomnimy również o przypadkach z przeliczalnie nieskończoną przestrzenią stanów, jeśli będzie to istotne dla omawianego zastosowania.
 
 Praca koncentruje się na podstawowych koncepcjach i własnościach łańcuchów Markowa, stanowiąc wprowadzenie do tego obszaru teorii procesów stochastycznych. Bardziej zaawansowane zagadnienia, takie jak uogólnienia do czasu ciągłego czy łańcuchy Markowa wyższego rzędu, wykraczają poza zakres niniejszej pracy.
 
-W kolejnych rozdziałach pracy systematycznie rozwijamy przedstawione zagadnienia, począwszy od niezbędnych podstaw probabilistycznych, poprzez formalną teorię łańcuchów Markowa, aż po praktyczne zastosowanie zilustrowane implementacją obliczeniową.
+\chapter{Wybrane zagadnienia rachunku prawdopodobieństwa}
+
+\section{Aksjomaty przestrzeni probabilistycznej}
+
+Zaczynamy od podania definicji przestrzeni probabilistycznej zaproponowanej prawie sto lat temu i obecnie najczęściej używanej.
+
+\begin{Def}[Kołmogorow]
+Niech dane będą niepusty zbiór $\Omega$, pewna rodzina $\mathcal{F}$ podzbiorów zbioru $\Omega$ oraz funkcja $P \colon \mathcal{F} \longrightarrow \mathbb{R}$. Trójkę $(\Omega, \mathcal{F}, P)$ nazywamy przestrzenią probabilistyczną jeśli zachodzą następujące warunki:
+\begin{enumerate}
+    \item $\Omega \in \mathcal{F}$,
+    \item jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$, to $\bigcup_{i=1}^{\infty} A_i \in \mathcal{F}$,
+    \item jeżeli $A, B \in \mathcal{F}$, to $A \setminus B \in \mathcal{F}$,
+    \item jeżeli $A \in \mathcal{F}$, to $P(A) \ge 0$,
+    \item jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$ są parami rozłączne, to:
+    \[ P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i), \]
+    \item $P(\Omega) = 1$.
+\end{enumerate}
+\end{Def}
+
+
+\begin{itemize}
+    \item $\omega \in \Omega$ – zdarzenie elementarne
+    \item $A \in \mathcal{F}$ – zdarzenie
+    \item $\Omega \setminus A$ – zdarzenie przeciwne do $A$
+    \item $\emptyset$ – zdarzenie niemożliwe
+    \item $\Omega$ – zdarzenie pewne
+    \item Rodzinę $\mathcal{F}$ spełniająca warunki 1 - 3 nazywamy $\sigma$-algebrą
+    \item Funkcję $P$ spełniająca warunki 4 - 6 nazywamy miara probabilistyczną
+    \item $P(A)$ – prawdopodobieństwo zdarzenia $A$,
+\end{itemize}
+
+
+\begin{Prz}
+Rzut kostką sześcienną -  czy wypadnie „1” (zdarzenie A)?
+\[ \Omega = \{1, 2, 3, 4, 5, 6\}, \quad \mathcal{F} = \{\emptyset, \{2, 3, 4, 5, 6\}, \{1\}, \Omega\}, \quad P(A) = \frac{1}{6}. \]
+\end{Prz}
+
+\noindent\textbf{Podstawowe własności:}
+\begin{enumerate}
+    \item $\emptyset \in \mathcal{F}$, bo $\emptyset = \Omega \setminus \Omega$.
+
+    \item Jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$, to $\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$, co wynika z praw de Morgana.
+
+    \item $P(\emptyset) = 0$, bo $P(\emptyset) = P\left(\bigcup_{i=1}^{\infty} \emptyset\right) = \sum_{i=1}^{\infty} P(\emptyset)$.
+
+    \item Jeżeli zbiory $A_1, A_2, A_3, \dots, A_n \in \mathcal{F}$ oraz $A_i \cap A_j = \emptyset$ dla $i \neq j$, to:
+    $P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)$, bo $P\left(\bigcup_{i=1}^{n} A_i\right) = P\left(\bigcup_{i=1}^{\infty} A_i\right)$, gdzie $A_i = \emptyset$ dla $i > n$.
+
+    \item Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
+    \[ P(B) = P(A) + P(B \setminus A), \] bo $B = A \cup (B \setminus A)$.
+
+    \item Dla każdego zdarzenia $A$: \[ P(\Omega\setminus A) = 1 - P(A) \]
+
+    \item Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
+    \[ P(A) \leq P(B), \]
+
+    \item Dla dowolnych zdarzeń $A$ i $B$:
+    \[ P(A \cup B) = P(A) + P(B) - P(A \cap B), \] bo $A \cup B = (A \setminus B) \cup (B \setminus A) \cup (A \cap B)$
+\end{enumerate}
+
+\noindent\textbf{Własności ciągów zdarzeń:}
+\begin{enumerate}
+    \item Dla dowolnych zdarzeń $A_1, A_2, A_3, \dots$:
+    \[ P\left(\bigcup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P(A_i), \]
+    bo $\bigcup_{i=1}^{\infty} A_i = \bigcup_{i=1}^{\infty} B_i$ – suma zbiorów rozłącznych, gdzie
+    $B_1 = A_1$, $B_2 = A_2 \setminus A_1$, $B_3 = A_3 \setminus (A_1 \cup A_2)$, \dots.
+
+    \item Jeżeli $P(A_i) = 0$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcup_{i=1}^{n} A_i\right) = 0$.
+
+    \item Jeżeli $P(A_i) = 1$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcap_{i=1}^{n} A_i\right) = 1$. \\
+    cy wynika z praw de Morgana.
+\end{enumerate}
+
+\begin{Tw}[o ciągu zdarzeń wstępujących]
+Jeżeli $A_1 \subset A_2 \subset A_3 \subset \dots$, to:
+\[ \lim_{n\to\infty} P(A_n) = P\left(\bigcup_{n=1}^{\infty} A_n\right), \]
+\end{Tw}
+\begin{proof}
+$P\left(\bigcup_{n=1}^{\infty} A_n\right) = P\left(\bigcup_{n=1}^{\infty} (A_n \setminus A_{n-1})\right) = \sum_{n=1}^{\infty} P(A_n \setminus A_{n-1}) = \lim_{N\to\infty} \sum_{n=1}^{N} P(A_n \setminus A_{n-1}) = \lim_{N\to\infty} P(A_N)$. Tutaj $A_0 = \emptyset$.
+\end{proof}
+
+\begin{Tw}[o ciągu zdarzeń zstępujących]
+Jeżeli $A_1 \supset A_2 \supset A_3 \supset \dots$, to:
+\[ \lim_{n\to\infty} P(A_n) = P\left(\bigcap_{n=1}^{\infty} A_n\right). \]
+\end{Tw}
+
+
+
 
 \printbibliography
 
