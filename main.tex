@@ -359,6 +359,27 @@ $A, B$ są niezależne $\iff P(B|A) = P(B)$.
 Zdarzenia $A_1, A_2, A_3, \dots$ są niezależne $\iff$\ dla każdego $n \ge 2$ zdarzenia $A_1, \dots, A_n$ są niezależne. 
 \end{Def}
 
+\section{Zmienne losowe}
+Zamiast bezpośrednio operować na zdarzeniach, często wygodniej jest przypisać wynikom doświadczenia losowego wartości liczbowe za pomocą zmiennych losowych.
+
+\begin{Def}[Wektor losowy]
+Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną. 
+Funkcja $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest wektorem losowym jeżeli jest ona funkcją mierzalną względem $\sigma$-algebry $\mathcal{F}$
+\[
+X^{-1}(B) = \{\omega \in \Omega : X(\omega) \in B\} \in \mathcal{F}
+\]
+dla każdego zbioru borelowskiego $B \in \mathcal{B}(\mathbb{R}^n)$.
+\par\noindent
+\textbf{Zmienna losowa} jest jednowymiarowym wektorem losowym.
+\end{Def}
+
+\begin{Def}[Rozkład wektora losowego]
+    Rozkład wektora losowego $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest to rozkład określony wzorem:
+\[
+P_X(B) = P(X^{-1}(B)), \quad \text{ dla } B \in \mathcal{B}(\mathbb{R}^n).
+\]
+\end{Def}
+
 
 
 \printbibliography
