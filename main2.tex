@@ -1,387 +1,61 @@
-\documentclass[final,a4paper,openany,12pt]{mwbk}
-\pdfminorversion=7
-\usepackage{polski}
+\documentclass{article}
 \usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage{tgtermes}
-\usepackage[T1]{fontenc}
-\input glyphtounicode
-\pdfgentounicode=1
-\usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{bbm}
-\usepackage{tikz}
-\usetikzlibrary{automata, positioning, arrows.meta}
-\usepackage{minted}
-\usepackage{amsthm}
-\usepackage{gensymb}
-\usepackage{mathrsfs}
-\usepackage{biblatex}
-\usepackage{csquotes}
-\usepackage{graphicx}
-\usepackage{float}
-\addbibresource{ref.bib}
+\usepackage{amssymb}
+\usepackage{amsthm} % Do definicji i przykładów
 
-% ustawienia do wydruku dwustronnego z uwzględnieniem dodatkowego miejsca na zszycie
-\setlength{\oddsidemargin}{0.46cm} %margines nieparzysty
-\setlength{\evensidemargin}{-0.54cm} %margines parzysty
-\setlength{\textwidth}{16cm} %szerokość tekstu na stronie
-\linespread{1.1} % lekkie zwiększenie odstępu między liniami, żeby tekst nie był taki ścisły, ponieważ
-% Odstęp pojedynczej interlinii nie jest komfortowy, kiedy trzeba czytać strony A4
-% koniec ustawień
-\fontfamily{lmr}\selectfont
-
-\begin{document}
-\newtheorem{Tw}{Twierdzenie}
+% Definicje i przykłady
 \newtheorem{Def}{Definicja}
 \newtheorem{Prz}{Przykład}
-\newtheorem{Dow}{Dowód}
-% instrukcja poniżej: wybór czcionki z pakietu 'lmodern' jako domyślnej
-\fontfamily{lmr}\selectfont % wybór czcionki "Latin Modern Roman"
 
-\begin{titlepage}
-\vspace{-0.5cm}
+\begin{document}
 
-\renewcommand{\arraystretch}{1.3} % zwiększamy odległość między wierszami na stronie tytułowej
-
-\begin{center}
-{\footnotesize
-\begin{tabular}{c}
-UNIWERSYTET KARDYNAŁA STEFANA WYSZYŃSKIEGO\\
-W WARSZAWIE\\
-\end{tabular}
-}
-\vspace{2.5cm}
-
-{\footnotesize
-\begin{tabular}{c}
-WYDZIAŁ MATEMATYCZNO-PRZYRODNICZY\\
-SZKOŁA NAUK ŚCISŁYCH\\
-\end{tabular}
-}
-\vspace{2.7cm}
-
-\renewcommand{\arraystretch}{1.5} % zwiększamy odległość między wierszami
-
-{\normalsize
-\begin{tabular}{c}
-Korneliusz Pogorzelczyk\\
-
-109204\\
-
-matematyka\\
-\end{tabular}
-}
-
-\vspace{2.3cm}
-
-{\large
-\begin{tabular}{c}
-Łańcuchy Markowa
-\end{tabular}
-}
-
-\end{center}
-\vspace{4cm}
-
-\hspace{6cm}
-\begin{tabular}{l}
-Praca licencjacka\\
-
-Promotor:\\
-
-dr Tomasz Rogala
-\end{tabular}
-
-\vspace{3.5cm}
-
-{\centering
-
-{\small
-\begin{tabular}{c}
-{WARSZAWA, 2025}\\
-\end{tabular}
-}
-
-}
-
-\renewcommand{\arraystretch}{1} % przywracamy domyślną odległość miedzy wierszami na następnych stronach
-
-\end{titlepage}
-
-\chapter{Wstęp}
-
-\section{Motywacja i wprowadzenie}
-
-W dzisiejszym świecie, gdzie losowość i niepewność odgrywają kluczową rolę w wielu obszarach nauki i techniki, procesy stochastyczne stanowią fundament matematycznego opisu zjawisk losowych. Spośród różnorodnych rodzajów procesów stochastycznych łańcuchy Markowa wyróżniają się szczególną elegancją matematyczną oraz szerokim wachlarzem zastosowań praktycznych.
-
-Łańcuchy Markowa, nazwane na cześć rosyjskiego matematyka Andrieja Markowa, który wprowadził to pojęcie na początku XX wieku, charakteryzują się szczególną własnością: przyszły stan procesu zależy wyłącznie od stanu obecnego, a nie od stanów poprzednich. Ta własność (zwana brakiem pamięci lub własnością Markowa) znacząco upraszcza analizę matematyczną tych procesów, jednocześnie zachowując ich zdolność do modelowania złożonych zjawisk rzeczywistych.
-
-Zastosowania łańcuchów Markowa są niezwykle różnorodne i obejmują takie dziedziny jak:
-\begin{itemize}
-    \item Finanse i ekonomia -- modelowanie rynków finansowych, ocena ryzyka kredytowego, teoria podejmowania decyzji;
-    \item Biologia i medycyna -- modelowanie rozprzestrzeniania się chorób, analiza sekwencji DNA, badanie procesów ewolucyjnych;
-    \item Fizyka -- opis układów cząstek, mechanika statystyczna, procesy dyfuzji;
-    \item Informatyka -- algorytmy uczenia maszynowego, generowanie tekstu, kompresja danych, metoda Monte Carlo oparta na łańcuchach Markowa.
-\end{itemize}
-
-W niniejszej pracy skupimy się na łańcuchach Markowa w czasie dyskretnym, które stanowią fundamentalny i intuicyjny wariant tej klasy procesów stochastycznych. Zbadamy ich podstawowe własności teoretyczne oraz przedstawimy praktyczne zastosowanie, ilustrując teorię konkretnym przykładem implementacji.
-
-\section{Cele i zakres pracy}
-
-Głównym celem niniejszej pracy jest przedstawienie teorii łańcuchów Markowa w czasie dyskretnym oraz demonstracja ich praktycznego zastosowania. W szczególności, praca stawia sobie następujące cele:
-
-\begin{enumerate}
-    \item Zaprezentowanie niezbędnych podstaw rachunku prawdopodobieństwa, stanowiących fundament teoretyczny dla zrozumienia łańcuchów Markowa.
-    
-    \item Wprowadzenie formalnej definicji łańcuchów Markowa w czasie dyskretnym oraz szczegółowa analiza ich kluczowych własności, ze szczególnym uwzględnieniem:
-    \begin{itemize}
-        \item Klasyfikacji stanów (stany przejściowe, pochłaniające, okresowe i ergodyczne),
-        \item Zachowania długoterminowego (rozkłady stacjonarne, ergodyczność),
-        \item Czasów pierwszego przejścia i powrotu do stanów.
-    \end{itemize}
-    
-\end{enumerate}
-
-Zakres pracy ogranicza się do łańcuchów Markowa w czasie dyskretnym, co oznacza, że stan procesu zmienia się w dyskretnych chwilach czasowych (krokach). Główny nacisk położony zostanie na łańcuchy o skończonej przestrzeni stanów, choć w wybranych miejscach wspomnimy również o przypadkach z przeliczalnie nieskończoną przestrzenią stanów, jeśli będzie to istotne dla omawianego zastosowania.
-
-Praca koncentruje się na podstawowych koncepcjach i własnościach łańcuchów Markowa, stanowiąc wprowadzenie do tego obszaru teorii procesów stochastycznych. Bardziej zaawansowane zagadnienia, takie jak uogólnienia do czasu ciągłego czy łańcuchy Markowa wyższego rzędu, wykraczają poza zakres niniejszej pracy.
-
-\chapter{Wybrane zagadnienia rachunku prawdopodobieństwa}
-
-\section{Przestrzenie probabilistyczne}
-
-Podstawą formalnego opisu zjawisk losowych jest pojęcie przestrzeni probabilistycznej. Jest to matematyczna struktura, która pozwala na precyzyjne definiowanie zdarzeń i przypisywanie im prawdopodobieństw.
-
-
-\begin{Def}[Przestrzeń zdarzeń elementarnych $\Omega$] Jest to zbiór wszystkich możliwych, wzajemnie wykluczających się wyników danego doświadczenia losowego. Elementy zbioru $\Omega$ nazywamy zdarzeniami elementarnymi.
-\end{Def}
-\begin{Prz}
-    Dla jednokrotnego rzutu sześcienną kostką do gry, $\Omega = \{1, 2, 3, 4, 5, 6\}$.
-\end{Prz}
-\begin{Prz}
-    Dla pomiaru czasu życia żarówki, $\Omega = [0, \infty)$ (lub $\mathbb{R}_{\ge 0}$), czyli zbiór wszystkich nieujemnych liczb rzeczywistych.
-\end{Prz}
-
-
-\begin{Def}[$\sigma$-ciało zdarzeń $\mathcal{F}$]
-Jest to rodzina podzbiorów przestrzeni $\Omega$ (czyli zdarzeń), która spełnia następujące warunki:
-    \begin{enumerate}
-        \item $\Omega \in \mathcal{F}$ (cała przestrzeń zdarzeń elementarnych jest zdarzeniem).
-        \item Jeżeli $A \in \mathcal{F}$, to $\Omega \setminus A \in \mathcal{F}$ (jeśli $A$ jest zdarzeniem to jego dopełnienie również jest zdarzeniem).
-        \item Jeżeli $A_1, A_2, \dots$ jest przeliczalnym ciągiem zdarzeń z $\mathcal{F}$ (tzn. $A_i \in \mathcal{F}$ dla $i=1, 2, \dots$), to ich suma $\bigcup_{i=1}^{\infty} A_i \in \mathcal{F}$ jest zdarzeniem.
-    \end{enumerate}
-    Elementy $\sigma$-ciała $\mathcal{F}$ nazywamy zdarzeniami.
-\end{Def}
-\begin{Prz}
-            Dla rzutu kostką $\mathcal{F}$ może być zbiorem wszystkich możliwych podzbiorów $\Omega$, np. zdarzenie "wypadła parzysta liczba oczek" to $\{2,4,6\}$
-\end{Prz}
-
-\begin{Def}[Miara probabilistyczna P]
-Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A \in \mathcal{F}$ liczbę $P(A)$, zwaną prawdopodobieństwem zdarzenia $A$, która spełnia następujące aksjomaty (aksjomaty Kołmogorowa):
-\begin{enumerate}
-    \item $P(A) \ge 0$ dla każdego $A \in \mathcal{F}$.
-    \item $P(\Omega) = 1$.
-    \item Dla dowolnego ciągu parami rozłącznych zdarzeń $A_1, A_2, \dots \in \mathcal{F}$ (tzn. $A_i \cap A_j = \emptyset$ dla $i \neq j$), zachodzi:
-    $$P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i) \quad (\text{przeliczalna addytywność})$$
-\end{enumerate}
-        
-    \end{Def}
-
-Z aksjomatów Kołmogorowa wynikają podstawowe własności prawdopodobieństwa, takie jak:
-\begin{itemize}
-    \item $P(\emptyset) = 0$.
-    \item Jeśli $A \subseteq B$, to $P(A) \le P(B)$ (monotoniczność).
-    \item $P(A^c) = 1 - P(A)$.
-    \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ (zasada włączeń i wyłączeń dla dwóch zdarzeń).
-\end{itemize}
-
-\vspace{3mm}
-
-\noindent\textbf{Podstawowe własności:}
-\begin{enumerate}
-    \item $\emptyset \in \mathcal{F}$, bo $\emptyset = \Omega \setminus \Omega$.
-
-    \item Jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$, to $\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$, co wynika z praw de Morgana.
-
-    \item $P(\emptyset) = 0$, bo $P(\emptyset) = P\left(\bigcup_{i=1}^{\infty} \emptyset\right) = \sum_{i=1}^{\infty} P(\emptyset)$.
-
-    \item Jeżeli zbiory $A_1, A_2, A_3, \dots, A_n \in \mathcal{F}$ oraz $A_i \cap A_j = \emptyset$ dla $i \neq j$, to:
-    $P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)$, bo $P\left(\bigcup_{i=1}^{n} A_i\right) = P\left(\bigcup_{i=1}^{\infty} A_i\right)$, gdzie $A_i = \emptyset$ dla $i > n$.
-
-    \item Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
-    \[ P(B) = P(A) + P(B \setminus A), \] bo $B = A \cup (B \setminus A)$.
-
-    \item Dla każdego zdarzenia $A$: \[ P(\Omega\setminus A) = 1 - P(A) \]
-
-    \item Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
-    \[ P(A) \leq P(B), \]
-
-    \item Dla dowolnych zdarzeń $A$ i $B$:
-    \[ P(A \cup B) = P(A) + P(B) - P(A \cap B), \] bo $A \cup B = (A \setminus B) \cup (B \setminus A) \cup (A \cap B)$
-\end{enumerate}
-
-\noindent\textbf{Własności ciągów zdarzeń:}
-\begin{enumerate}
-    \item Dla dowolnych zdarzeń $A_1, A_2, A_3, \dots$:
-    \[ P\left(\bigcup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P(A_i), \]
-    bo $\bigcup_{i=1}^{\infty} A_i = \bigcup_{i=1}^{\infty} B_i$ – suma zbiorów rozłącznych, gdzie
-    $B_1 = A_1$, $B_2 = A_2 \setminus A_1$, $B_3 = A_3 \setminus (A_1 \cup A_2)$, \dots.
-
-    \item Jeżeli $P(A_i) = 0$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcup_{i=1}^{n} A_i\right) = 0$.
-
-    \item Jeżeli $P(A_i) = 1$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcap_{i=1}^{n} A_i\right) = 1$. \\
-    cy wynika z praw de Morgana.
-\end{enumerate}
-
-\begin{Tw}[o ciągu zdarzeń wstępujących]
-Jeżeli $A_1 \subset A_2 \subset A_3 \subset \dots$, to:
-\[ \lim_{n\to\infty} P(A_n) = P\left(\bigcup_{n=1}^{\infty} A_n\right), \]
-\end{Tw}
-\begin{proof}
-$P\left(\bigcup_{n=1}^{\infty} A_n\right) = P\left(\bigcup_{n=1}^{\infty} (A_n \setminus A_{n-1})\right) = \sum_{n=1}^{\infty} P(A_n \setminus A_{n-1}) = \lim_{N\to\infty} \sum_{n=1}^{N} P(A_n \setminus A_{n-1}) = \lim_{N\to\infty} P(A_N)$. Tutaj $A_0 = \emptyset$.
-\end{proof}
-
-\begin{Tw}[o ciągu zdarzeń zstępujących]
-Jeżeli $A_1 \supset A_2 \supset A_3 \supset \dots$, to:
-\[ \lim_{n\to\infty} P(A_n) = P\left(\bigcap_{n=1}^{\infty} A_n\right). \]
-\end{Tw}
-
-\section{Prawdopodobieństwo warunkowe i niezależność}
-Często interesuje nas prawdopodobieństwo zajścia jednego zdarzenia pod warunkiem, że zaszło inne zdarzenie. Pojęcie to jest sformalizowane przez prawdopodobieństwo warunkowe.
-
-\begin{Def}[Prawdopodobieństwo warunkowe]
-    Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną i niech $A, B \in \mathcal{F}$ będą dwoma zdarzeniami, przy czym $P(B) > 0$. Prawdopodobieństwo warunkowe zdarzenia $A$ pod warunkiem zajścia zdarzenia $B$ określamy wzorem:
-    $$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
-\end{Def}
-
-
-Prawdopodobieństwo warunkowe $P(A|B)$ mówi nam, jak zmienia się szansa na zajście zdarzenia $A$, gdy posiadamy informację, że zdarzenie $B$ już miało miejsce. Przestrzeń zdarzeń elementarnych zostaje ograniczona do tych, które sprzyjają zdarzeniu $B$.
-
-
-\begin{Tw}[Wzór na prawdopodobieństwo całkowite]
-Dana jest przestrzeń probabilistyczna $(\Omega, \mathcal{F}, P)$ oraz zdarzenia $W_1, \dots, W_n \in \mathcal{F}$ spełniające warunki:
-\begin{enumerate}
-    \item[(i)] $P(B_i) > 0$ dla każdego $i = 1, \dots, n$,
-    \item[(ii)] $B_i \cap W_j = \emptyset$ dla wszystkich $i \neq j$,
-    \item[(iii)] $B_1 \cup \dots \cup B_n = \Omega$.
-\end{enumerate}
-Wtedy dla każdego zdarzenia $A \in \mathcal{F}$ zachodzi wzór:
-\[
-P(A) = \sum_{i=1}^{n} P(A|B_i)P(B_i).
-\]
-\end{Tw}
-\begin{Dow}
-    Ponieważ $A = A \cap \Omega = A \cap (\bigcup_{i=1}^{n} B_i) = \bigcup_{i=1}^{n} (A \cap B_i)$, mamy
-\[
-P(A) = \sum_{i=1}^{n} P(A \cap B_i) = \sum_{i=1}^{n} P(A|B_i)P(B_i).
-\]
-\end{Dow}
-
-\begin{Prz}
-Mamy trzy identycznie wyglądające urny. W pierwszej urnie znajdują się 2 kule białe i 3 czarne. W drugiej 4 białe i 1 czarna, a w trzeciej 1 biała i 4 czarne. Losujemy jedną urnę, a następnie z niej jedną kulę. Jakie jest prawdopodobieństwo wylosowania białej kuli?
-
-Niech $U_1, U_2, U_3$ oznaczają zdarzenia polegające na wyborze odpowiednio urny pierwszej, drugiej i trzeciej. Zdarzenia te stanowią warunki (pełny układ zdarzeń). Niech $A$ będzie zdarzeniem polegającym na wylosowaniu białej kuli.
-
-Prawdopodobieństwo wyboru każdej z urn jest takie samo, więc:
-\[ P(U_1) = P(U_2) = P(U_3) = \frac{1}{3} \]
-
-Prawdopodobieństwa warunkowe wylosowania białej kuli, pod warunkiem wyboru konkretnej urny, wynoszą:
-\begin{itemize}
-    \item $P(A|U_1) = \frac{2}{2+3} = \frac{2}{5}$
-    \item $P(A|U_2) = \frac{4}{4+1} = \frac{4}{5}$
-    \item $P(A|U_3) = \frac{1}{1+4} = \frac{1}{5}$
-\end{itemize}
-
-Stosując wzór na prawdopodobieństwo całkowite, obliczamy $P(A)$:
-\begin{align*}
-P(A) &= P(A|U_1)P(U_1) + P(A|U_2)P(U_2) + P(A|U_3)P(U_3) \\
-&= \frac{2}{5} \cdot \frac{1}{3} + \frac{4}{5} \cdot \frac{1}{3} + \frac{1}{5} \cdot \frac{1}{3} \\
-&= \frac{1}{3} \left( \frac{2}{5} + \frac{4}{5} + \frac{1}{5} \right) \\
-&= \frac{1}{3} \cdot \frac{7}{5} = \frac{7}{15}
-\end{align*}
-
-Zatem, całkowite prawdopodobieństwo wylosowania białej kuli wynosi $\frac{7}{15}$.
-\end{Prz}
-
-\begin{Tw}[Wzór Bayesa]
-Przy założeniach wzoru na prawdopodobieństwo całkowite zachodzi następująca równość:
-\[
-P(B_k|A) = \frac{P(A|B_k)P(B_k)}{\sum_{i=1}^{n} P(A|B_i)P(B_i)}
-\]
-dla każdego $k=1, \dots, n$.
-\end{Tw}
-
-\begin{Dow}
- Dowód wynika bezpośrednio z definicji prawdopodobieństwa warunkowego. Dla zdarzeń $A$ i $B_k$, gdzie $P(A) > 0$, mamy:
-\[
-P(B_k|A) = \frac{P(B_k \cap A)}{P(A)}
-\]
-Licznik $P(B_k \cap A)$ możemy rozpisać, korzystając z definicji prawdopodobieństwa warunkowego w drugą stronę (zakładając, że $P(B_k) > 0$):
-\[
-P(A|B_k) = \frac{P(A \cap B_k)}{P(B_k)} \implies P(A \cap B_k) = P(A|B_k)P(B_k)
-\]
-Mianownik $P(A)$ rozpisujemy ze wzoru na prawdopodobieństwo całkowite, zakładając, że zbiory $\{B_i\}_{i=1}^n$ tworzą rozbicie przestrzeni $\Omega$:
-\[
-P(A) = \sum_{i=1}^{n} P(A|B_i)P(B_i)
-\]
-Podstawiając oba wyrażenia do początkowej definicji, otrzymujemy tezę twierdzenia:
-\[
-P(B_k|A) = \frac{P(A|B_k)P(B_k)}{\sum_{i=1}^{n} P(A|B_i)P(B_i)}
-\]   
-\end{Dow}
-
-Wzór Bayesa pozwala obliczyć prawdopodobieństwo "przyczyny" ($B_k$) na podstawie zaobserwowanego "skutku" ($A$). Innymi słowy, pozwala zaktualizować nasze przekonanie o prawdopodobieństwie zajścia zdarzenia $B_k$ po uzyskaniu nowej informacji, że zaszło zdarzenie $A$, uzyskując prawdopodobieństwo a posteriori $P(B_k|A)$.
-
-\begin{Def}[Niezależność zdarzeń]
-Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną. Niech $A, B \in \mathcal{F}$. 
-$A, B$ są niezależne $\iff P(A \cap B) = P(A) \cdot P(B) $
-\end{Def}
-
-Zauważmy, że gdy $P(A) > 0$ mamy natychmiastową równoważność:
-\begin{center}
-$A, B$ są niezależne $\iff P(B|A) = P(B)$.
-\end{center}
-
-\begin{Prz}
-    Rzucając dwiema kostkami łatwo sprawdzić, że:
-\begin{itemize}
-    \item Niezależnymi zdarzeniami są zdarzenia $A, B$: $A$ – na pierwszej kostce wypadła „4", $B$ – na drugiej kostce wypadła liczba pierwsza.
-    \item Zależnymi zdarzeniami są zdarzenia $A, B$: $A$ – suma oczek na kostkach jest $\ge 8$, $B$ – na drugiej kostce wypadła „6".
-    \item Zależnymi zdarzeniami są każde dwa zdarzenia rozłączne $A, B$, o ile $P(A)P(B) > 0$.
-\end{itemize}
-\end{Prz}
-
-\begin{Def}
- Zdarzenia $A_1, \dots, A_n$ są niezależne $\iff$ dla każdego podciągu $A_{k_1}, \dots, A_{k_j}$ zachodzi:
-\[ P(A_{k_1} \cap \dots \cap A_{k_j}) = P(A_{k_1}) \cdot \dots \cdot P(A_{k_j}). \]
-Zdarzenia $A_1, A_2, A_3, \dots$ są niezależne $\iff$\ dla każdego $n \ge 2$ zdarzenia $A_1, \dots, A_n$ są niezależne. 
-\end{Def}
-
-\section{Zmienne losowe}
-Zamiast bezpośrednio operować na zdarzeniach, często wygodniej jest przypisać wynikom doświadczenia losowego wartości liczbowe za pomocą zmiennych losowych.
+\section*{Zmienne Losowe i Ich Rozkłady}
 
 \begin{Def}[Wektor losowy]
-Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną. 
-Funkcja $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest wektorem losowym jeżeli jest ona funkcją mierzalną względem $\sigma$-algebry $\mathcal{F}$
+Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną.
+Funkcja $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest wektorem losowym, jeżeli jest ona funkcją mierzalną względem $\sigma$-algebry $\mathcal{F}$, tj.
 \[
 X^{-1}(B) = \{\omega \in \Omega : X(\omega) \in B\} \in \mathcal{F}
 \]
 dla każdego zbioru borelowskiego $B \in \mathcal{B}(\mathbb{R}^n)$.
 \par\noindent
-\textbf{Zmienna losowa} jest jednowymiarowym wektorem losowym.
+\textbf{Zmienna losowa} jest jednowymiarowym wektorem losowym ($n=1$).
 \end{Def}
 
 \begin{Def}[Rozkład wektora losowego]
-    Rozkład wektora losowego $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest to rozkład określony wzorem:
+Rozkład wektora losowego $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest to miara probabilistyczna $P_X$ określona na $\mathcal{B}(\mathbb{R}^n)$ wzorem:
 \[
 P_X(B) = P(X^{-1}(B)), \quad \text{ dla } B \in \mathcal{B}(\mathbb{R}^n).
 \]
+Innymi słowy, $P_X(B)$ to prawdopodobieństwo, że wektor losowy $X$ przyjmie wartość ze zbioru $B$.
 \end{Def}
 
+\begin{Prz}
+Rozważmy jednowymiarową zmienną losową $X$ reprezentującą sumę wyników z rzutu dwiema symetrycznymi sześciennymi kostkami do gry.
+\begin{itemize}
+    \item Przestrzeń zdarzeń elementarnych $\Omega$ to zbiór wszystkich możliwych par wyników $(k, l)$, gdzie $k,l \in \{1, 2, 3, 4, 5, 6\}$.
+    Moc zbioru $\Omega$ wynosi $6 \times 6 = 36$. Każdy wynik $(k,l)$ ma prawdopodobieństwo $\frac{1}{36}$.
+    \item Zmienna losowa $X$ jest funkcją $X(k,l) = k+l$.
+    \item Możliwe wartości zmiennej losowej $X$ (sumy oczek) to liczby całkowite z przedziału $[2, 12]$.
+\end{itemize}
 
-
-\printbibliography
+Poniżej przedstawiono rozkład prawdopodobieństwa zmiennej losowej $X$:
+\begin{align*}
+P(X=2)   &= P(\{(1,1)\}) = \frac{1}{36} \\
+P(X=3)   &= P(\{(1,2), (2,1)\}) = \frac{2}{36} \\
+P(X=4)   &= P(\{(1,3), (2,2), (3,1)\}) = \frac{3}{36} \\
+P(X=5)   &= P(\{(1,4), (2,3), (3,2), (4,1)\}) = \frac{4}{36} \\
+P(X=6)   &= P(\{(1,5), (2,4), (3,3), (4,2), (5,1)\}) = \frac{5}{36} \\
+P(X=7)   &= P(\{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}) = \frac{6}{36} \\
+P(X=8)   &= P(\{(2,6), (3,5), (4,4), (5,3), (6,2)\}) = \frac{5}{36} \\
+P(X=9)   &= P(\{(3,6), (4,5), (5,4), (6,3)\}) = \frac{4}{36} \\
+P(X=10)  &= P(\{(4,6), (5,5), (6,4)\}) = \frac{3}{36} \\
+P(X=11)  &= P(\{(5,6), (6,5)\}) = \frac{2}{36} \\
+P(X=12)  &= P(\{(6,6)\}) = \frac{1}{36}
+\end{align*}
+Sumując wszystkie prawdopodobieństwa, otrzymujemy $\sum_{k=2}^{12} P(X=k) = \frac{36}{36} = 1$, co potwierdza, że jest to prawidłowy rozkład prawdopodobieństwa.
+\end{Prz}
 
 \end{document}

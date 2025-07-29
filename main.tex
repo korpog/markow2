@@ -144,7 +144,7 @@ Głównym celem niniejszej pracy jest przedstawienie teorii łańcuchów Markowa
     
 \end{enumerate}
 
-Zakres pracy ogranicza się do łańcuchów Markowa w czasie dyskretnym, co oznacza, że stan procesu zmienia się w dyskretnych chwilach czasowych (krokach). Główny nacisk położony zostanie na łańcuchy o skończonej przestrzeni stanów, choć w wybranych miejscach wspomnimy również o przypadkach z przeliczalnie nieskończoną przestrzenią stanów, jeśli będzie to istotne dla omawianego zastosowania.
+Zakres pracy ogranicza się do łańcuchów Markowa w czasie dyskretnym, co oznacza, że stan procesu zmienia się w dyskretnych chwilach czasowych (krokach). Główny nacisk położony zostanie na łańcuchy jednorodne (dla których prawdopodobieństwa przejścia nie zależą od czasu).
 
 Praca koncentruje się na podstawowych koncepcjach i własnościach łańcuchów Markowa, stanowiąc wprowadzenie do tego obszaru teorii procesów stochastycznych. Bardziej zaawansowane zagadnienia, takie jak uogólnienia do czasu ciągłego czy łańcuchy Markowa wyższego rzędu, wykraczają poza zakres niniejszej pracy.
 
@@ -240,19 +240,6 @@ Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A
     \item Jeżeli $P(A_i) = 1$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcap_{i=1}^{n} A_i\right) = 1$. \\
     co wynika z praw de Morgana.
 \end{enumerate}
-
-\begin{Tw}[o ciągu zdarzeń wstępujących]
-Jeżeli $A_1 \subset A_2 \subset A_3 \subset \dots$, to:
-\[ \lim_{n\to\infty} P(A_n) = P\left(\bigcup_{n=1}^{\infty} A_n\right), \]
-\end{Tw}
-\begin{proof}
-$P\left(\bigcup_{n=1}^{\infty} A_n\right) = P\left(\bigcup_{n=1}^{\infty} (A_n \setminus A_{n-1})\right) = \sum_{n=1}^{\infty} P(A_n \setminus A_{n-1}) = \lim_{N\to\infty} \sum_{n=1}^{N} P(A_n \setminus A_{n-1}) = \lim_{N\to\infty} P(A_N)$. Tutaj $A_0 = \emptyset$.
-\end{proof}
-
-\begin{Tw}[o ciągu zdarzeń zstępujących]
-Jeżeli $A_1 \supset A_2 \supset A_3 \supset \dots$, to:
-\[ \lim_{n\to\infty} P(A_n) = P\left(\bigcap_{n=1}^{\infty} A_n\right). \]
-\end{Tw}
 
 \section{Prawdopodobieństwo warunkowe i niezależność}
 Często interesuje nas prawdopodobieństwo zajścia jednego zdarzenia pod warunkiem, że zaszło inne zdarzenie. Pojęcie to jest sformalizowane przez prawdopodobieństwo warunkowe.
@@ -385,40 +372,93 @@ f^{-1}(B)=\{\omega \in \Omega : f(\omega) \in B\}\in\mathcal{F}.
 \end{Def}
 
 \begin{Def}[Wektor losowy]
-Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną. 
-Funkcja $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest wektorem losowym jeżeli jest ona funkcją mierzalną względem $\sigma$-algebry $\mathcal{F}$
+Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną.
+Funkcja $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest wektorem losowym, jeżeli jest ona funkcją mierzalną względem $\sigma$-algebry $\mathcal{F}$, tj.
 \[
 X^{-1}(B) = \{\omega \in \Omega : X(\omega) \in B\} \in \mathcal{F}
 \]
 dla każdego zbioru borelowskiego $B \in \mathcal{B}(\mathbb{R}^n)$.
 \par\noindent
-\textbf{Zmienna losowa} jest jednowymiarowym wektorem losowym.
+\textbf{Zmienna losowa} jest jednowymiarowym wektorem losowym ($n=1$).
 \end{Def}
 
-\begin{Prz}
-\[
-\Omega = \{1,2,3,4,5,6\} \times \{1,2,3,4,5,6\}.
-\]
-
-\[
-X \colon \Omega \longrightarrow \mathbb{R}, \qquad
-X(k,l) = k + l.
-\]
-
-\end{Prz}
-
 \begin{Def}[Rozkład wektora losowego]
-    Rozkład wektora losowego $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest to rozkład określony wzorem:
+Rozkład wektora losowego $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest to miara probabilistyczna $P_X$ określona na $\mathcal{B}(\mathbb{R}^n)$ wzorem:
 \[
 P_X(B) = P(X^{-1}(B)), \quad \text{ dla } B \in \mathcal{B}(\mathbb{R}^n).
 \]
+Innymi słowy, $P_X(B)$ to prawdopodobieństwo, że wektor losowy $X$ przyjmie wartość ze zbioru $B$.
 \end{Def}
+
+\begin{Prz}
+Rozważmy jednowymiarową zmienną losową $X$ reprezentującą sumę wyników z rzutu dwiema symetrycznymi sześciennymi kostkami do gry.
+\begin{itemize}
+    \item Przestrzeń zdarzeń elementarnych $\Omega$ to zbiór wszystkich możliwych par wyników $(k, l)$, gdzie $k,l \in \{1, 2, 3, 4, 5, 6\}$.
+    Moc zbioru $\Omega$ wynosi $6 \times 6 = 36$. Każdy wynik $(k,l)$ ma prawdopodobieństwo $\frac{1}{36}$.
+    \item Zmienna losowa $X$ jest funkcją $X(k,l) = k+l$.
+    \item Możliwe wartości zmiennej losowej $X$ (sumy oczek) to liczby całkowite z przedziału $[2, 12]$.
+\end{itemize}
+
+Poniżej przedstawiono rozkład prawdopodobieństwa zmiennej losowej $X$:
+\begin{align*}
+P(X=2)   &= P(\{(1,1)\}) = \frac{1}{36} \\
+P(X=3)   &= P(\{(1,2), (2,1)\}) = \frac{2}{36} \\
+P(X=4)   &= P(\{(1,3), (2,2), (3,1)\}) = \frac{3}{36} \\
+P(X=5)   &= P(\{(1,4), (2,3), (3,2), (4,1)\}) = \frac{4}{36} \\
+P(X=6)   &= P(\{(1,5), (2,4), (3,3), (4,2), (5,1)\}) = \frac{5}{36} \\
+P(X=7)   &= P(\{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}) = \frac{6}{36} \\
+P(X=8)   &= P(\{(2,6), (3,5), (4,4), (5,3), (6,2)\}) = \frac{5}{36} \\
+P(X=9)   &= P(\{(3,6), (4,5), (5,4), (6,3)\}) = \frac{4}{36} \\
+P(X=10)  &= P(\{(4,6), (5,5), (6,4)\}) = \frac{3}{36} \\
+P(X=11)  &= P(\{(5,6), (6,5)\}) = \frac{2}{36} \\
+P(X=12)  &= P(\{(6,6)\}) = \frac{1}{36}
+\end{align*}
+Sumując wszystkie prawdopodobieństwa, otrzymujemy $\sum_{k=2}^{12} P(X=k) = \frac{36}{36} = 1$, co potwierdza, że jest to prawidłowy rozkład prawdopodobieństwa.
+\end{Prz}
+
+\begin{Def}[Niezależność zmiennych losowych]
+Mówimy, że zmienne losowe $X_1, X_2, \dots, X_n$ określone na tej samej przestrzeni probabilistycznej $(\Omega, \mathcal{F}, P)$ są \textbf{niezależne}, jeżeli dla dowolnych zbiorów borelowskich $B_1, B_2, \dots, B_n \in \mathcal{B}(\mathbb{R})$ zachodzi równość:
+$$
+P(X_1 \in B_1, X_2 \in B_2, \dots, X_n \in B_n) = P(X_1 \in B_1) \cdot P(X_2 \in B_2) \cdot \dots \cdot P(X_n \in B_n)
+$$
+W przypadku dwóch zmiennych losowych $X$ i $Y$, są one niezależne, gdy dla dowolnych zbiorów borelowskich $A, B \in \mathcal{B}(\mathbb{R})$:
+$$
+P(X \in A, Y \in B) = P(X \in A) \cdot P(Y \in B)
+$$
+\end{Def}
+
+\begin{Prz}
+    Rozważmy dwukrotny rzut symetryczną kostką do gry. Przestrzeń zdarzeń elementarnych $\Omega$ składa się z 36 par $(i, j)$, gdzie $i, j \in \{1, 2, 3, 4, 5, 6\}$. Każdy wynik jest jednakowo prawdopodobny, więc $P(\{(i,j)\}) = \frac{1}{36}$.
+
+Niech zmienna losowa $X$ oznacza wynik pierwszego rzutu, a $Y$ wynik drugiego rzutu. Zatem $X(i,j) = i$ oraz $Y(i,j) = j$.
+
+Sprawdźmy, czy te zmienne są niezależne. Wybierzmy dowolne wartości $k, l \in \{1, 2, 3, 4, 5, 6\}$.
+Zdarzenie $\{X=k, Y=l\}$ odpowiada wynikowi $(k,l)$, więc jego prawdopodobieństwo wynosi:
+$$
+P(X=k, Y=l) = P(\{(k,l)\}) = \frac{1}{36}
+$$
+Zdarzenie $\{X=k\}$ zachodzi, gdy wynikiem jest jedna z par $(k,1), (k,2), \dots, (k,6)$. Jest 6 takich par, więc:
+$$
+P(X=k) = \frac{6}{36} = \frac{1}{6}
+$$
+Analogicznie dla zmiennej $Y$:
+$$
+P(Y=l) = \frac{6}{36} = \frac{1}{6}
+$$
+Sprawdzamy warunek niezależności:
+$$
+P(X=k) \cdot P(Y=l) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}
+$$
+Ponieważ $P(X=k, Y=l) = P(X=k) \cdot P(Y=l)$ dla wszystkich możliwych wartości $k$ i $l$, zmienne losowe $X$ i $Y$ są niezależne.
+\end{Prz}
 
 \chapter{Łańcuchy Markowa}
 
 W tym rozdziale formalnie zdefiniujemy dyskretne łańcuchy Markowa i zbadamy ich podstawowe właściwości.
 
-\begin{Def}[Łańcuch Markowa]
+\section{Definicja}
+
+\begin{Def}[Jednorodny łańcuch Markowa]
 Niech $(\Omega,\mathcal F,\mathbb P)$ będzie przestrzenią probabilistyczną, a 
 $(X_n)_{n\ge 0}$ — ciągiem zmiennych losowych przyjmujących wartości w skończonym
 lub przeliczalnym zbiorze stanów $S$.  
@@ -434,6 +474,25 @@ dla każdego $n\in\mathbb N$ oraz wszystkich $i_0,\ldots,i_{n-1},i,j\in S$ zacho
 gdzie $p_{ij}$ zależą jedynie od bieżącego stanu $i$ i stanu $j$, lecz nie od $n$.
 Macierz $P=(p_{ij})_{i,j\in S}$ nazywamy \emph{macierzą przejścia} łańcucha Markowa.
 \end{Def}
+
+\begin{Prz}
+Rozważmy prosty model pogody. Zbiór stanów to $S = \{\text{Słonecznie, Deszczowo}\}$.
+Niech $X_n$ będzie zmienną losową opisującą pogodę w dniu $n$. Zakładamy, że pogoda w danym dniu zależy tylko od pogody w dniu poprzednim. Jest to więc jednorodny łańcuch Markowa.
+
+Prawdopodobieństwa przejścia między stanami są następujące:
+\begin{itemize}
+    \item Jeśli dzisiaj jest słonecznie, to prawdopodobieństwo, że jutro też będzie słonecznie, wynosi $p_{11} = 0.8$, a że będzie deszczowo, wynosi $p_{12} = 0.2$.
+    \item Jeśli dzisiaj jest deszczowo, to prawdopodobieństwo, że jutro będzie słonecznie, wynosi $p_{21} = 0.4$, a że nadal będzie deszczowo, wynosi $p_{22} = 0.6$.
+\end{itemize}
+Macierz przejścia $P$ dla tego łańcucha Markowa ma postać:
+\[
+P = \begin{pmatrix}
+0.8 & 0.2 \\
+0.4 & 0.6
+\end{pmatrix}
+\]
+gdzie wiersze i kolumny odpowiadają stanom Słonecznie i Deszczowo. Własność Markowa jest tu spełniona, ponieważ prawdopodobieństwo stanu pogody w dniu $n+1$ zależy wyłącznie od stanu w dniu $n$.
+\end{Prz}
 
 
 
