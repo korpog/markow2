@@ -161,7 +161,7 @@ Podstawą formalnego opisu zjawisk losowych jest pojęcie przestrzeni probabilis
     Dla jednokrotnego rzutu sześcienną kostką do gry, $\Omega = \{1, 2, 3, 4, 5, 6\}$.
 \end{Prz}
 \begin{Prz}
-    Dla pomiaru czasu życia żarówki $\Omega = [0, \infty)$ (lub $\mathbb{R}_{\ge 0}$), czyli zbiór wszystkich nieujemnych liczb rzeczywistych.
+    Dla pomiaru czasu życia żarówki, $\Omega = [0, \infty)$ (lub $\mathbb{R}_{\ge 0}$), czyli zbiór wszystkich nieujemnych liczb rzeczywistych.
 \end{Prz}
 
 
@@ -186,22 +186,16 @@ Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A
     \item Dla dowolnego ciągu parami rozłącznych zdarzeń $A_1, A_2, \dots \in \mathcal{F}$ (tzn. $A_i \cap A_j = \emptyset$ dla $i \neq j$), zachodzi:
     $$P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i) \quad (\text{przeliczalna addytywność})$$
 \end{enumerate}
-\end{Def}
+        
+    \end{Def}
 
-\begin{Def}[Przestrzeń probabilistyczna]
-    Trójkę $(\Omega, \mathcal{F}, P)$ nazywamy \textbf{przestrzenią probabilistyczną}.
-\end{Def}
-
-\begin{Prz}
-    \[
-\Omega = \{1,2,3,4,5,6\},\quad
-\mathcal F = 2^{\Omega},\quad
-\mathbb P(A) = \frac{|A|}{6},\; A\subseteq\Omega.
-\]
-
-\end{Prz}
-
-
+Z aksjomatów Kołmogorowa wynikają podstawowe własności prawdopodobieństwa, takie jak:
+\begin{itemize}
+    \item $P(\emptyset) = 0$.
+    \item Jeśli $A \subseteq B$, to $P(A) \le P(B)$ (monotoniczność).
+    \item $P(A^c) = 1 - P(A)$.
+    \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ (zasada włączeń i wyłączeń dla dwóch zdarzeń).
+\end{itemize}
 
 \vspace{3mm}
 
@@ -238,7 +232,7 @@ Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A
     \item Jeżeli $P(A_i) = 0$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcup_{i=1}^{n} A_i\right) = 0$.
 
     \item Jeżeli $P(A_i) = 1$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcap_{i=1}^{n} A_i\right) = 1$. \\
-    co wynika z praw de Morgana.
+    cy wynika z praw de Morgana.
 \end{enumerate}
 
 \begin{Tw}[o ciągu zdarzeń wstępujących]
@@ -286,21 +280,21 @@ P(A) = \sum_{i=1}^{n} P(A \cap B_i) = \sum_{i=1}^{n} P(A|B_i)P(B_i).
 \end{Dow}
 
 \begin{Prz}
-Mamy trzy urny. W pierwszej urnie znajdują się 2 białe kule i 3 czarne. W drugiej 4 białe i 1 czarna, a w trzeciej 1 biała i 4 czarne. Losujemy jedną urnę, a następnie z niej jedną kulę. Jakie jest prawdopodobieństwo wylosowania białej kuli?
+Mamy trzy identycznie wyglądające urny. W pierwszej urnie znajdują się 2 kule białe i 3 czarne. W drugiej 4 białe i 1 czarna, a w trzeciej 1 biała i 4 czarne. Losujemy jedną urnę, a następnie z niej jedną kulę. Jakie jest prawdopodobieństwo wylosowania białej kuli?
 
-Niech $U_1, U_2, U_3$ oznaczają zdarzenia polegające na wyborze odpowiednio urny pierwszej, drugiej i trzeciej. Zdarzenia te stanowią warunki (pełen układ zdarzeń). Niech $A$ będzie zdarzeniem polegającym na wylosowaniu białej kuli.
+Niech $U_1, U_2, U_3$ oznaczają zdarzenia polegające na wyborze odpowiednio urny pierwszej, drugiej i trzeciej. Zdarzenia te stanowią warunki (pełny układ zdarzeń). Niech $A$ będzie zdarzeniem polegającym na wylosowaniu białej kuli.
 
-Prawdopodobieństwo wyboru każdej z urn jest takie samo :
+Prawdopodobieństwo wyboru każdej z urn jest takie samo, więc:
 \[ P(U_1) = P(U_2) = P(U_3) = \frac{1}{3} \]
 
-Prawdopodobieństwa warunkowe wylosowania białej kuli pod warunkiem wyboru konkretnej urny wynoszą:
+Prawdopodobieństwa warunkowe wylosowania białej kuli, pod warunkiem wyboru konkretnej urny, wynoszą:
 \begin{itemize}
     \item $P(A|U_1) = \frac{2}{2+3} = \frac{2}{5}$
     \item $P(A|U_2) = \frac{4}{4+1} = \frac{4}{5}$
     \item $P(A|U_3) = \frac{1}{1+4} = \frac{1}{5}$
 \end{itemize}
 
-Stosując wzór na prawdopodobieństwo całkowite obliczamy $P(A)$:
+Stosując wzór na prawdopodobieństwo całkowite, obliczamy $P(A)$:
 \begin{align*}
 P(A) &= P(A|U_1)P(U_1) + P(A|U_2)P(U_2) + P(A|U_3)P(U_3) \\
 &= \frac{2}{5} \cdot \frac{1}{3} + \frac{4}{5} \cdot \frac{1}{3} + \frac{1}{5} \cdot \frac{1}{3} \\
@@ -308,7 +302,7 @@ P(A) &= P(A|U_1)P(U_1) + P(A|U_2)P(U_2) + P(A|U_3)P(U_3) \\
 &= \frac{1}{3} \cdot \frac{7}{5} = \frac{7}{15}
 \end{align*}
 
-Wobec tego prawdopodobieństwo całkowite wylosowania białej kuli wynosi $\frac{7}{15}$.
+Zatem, całkowite prawdopodobieństwo wylosowania białej kuli wynosi $\frac{7}{15}$.
 \end{Prz}
 
 \begin{Tw}[Wzór Bayesa]
@@ -320,11 +314,11 @@ dla każdego $k=1, \dots, n$.
 \end{Tw}
 
 \begin{Dow}
- Dowód wynika bezpośrednio z definicji prawdopodobieństwa warunkowego. Dla zdarzeń $A$ i $B_k$, gdzie $P(A) > 0$ mamy:
+ Dowód wynika bezpośrednio z definicji prawdopodobieństwa warunkowego. Dla zdarzeń $A$ i $B_k$, gdzie $P(A) > 0$, mamy:
 \[
 P(B_k|A) = \frac{P(B_k \cap A)}{P(A)}
 \]
-Licznik $P(B_k \cap A)$ możemy rozpisać korzystając z definicji prawdopodobieństwa warunkowego (zakładamy, że $P(B_k) > 0$):
+Licznik $P(B_k \cap A)$ możemy rozpisać, korzystając z definicji prawdopodobieństwa warunkowego w drugą stronę (zakładając, że $P(B_k) > 0$):
 \[
 P(A|B_k) = \frac{P(A \cap B_k)}{P(B_k)} \implies P(A \cap B_k) = P(A|B_k)P(B_k)
 \]
@@ -332,7 +326,7 @@ Mianownik $P(A)$ rozpisujemy ze wzoru na prawdopodobieństwo całkowite, zakład
 \[
 P(A) = \sum_{i=1}^{n} P(A|B_i)P(B_i)
 \]
-Podstawiając oba wyrażenia do początkowej definicji otrzymujemy tezę twierdzenia:
+Podstawiając oba wyrażenia do początkowej definicji, otrzymujemy tezę twierdzenia:
 \[
 P(B_k|A) = \frac{P(A|B_k)P(B_k)}{\sum_{i=1}^{n} P(A|B_i)P(B_i)}
 \]   
@@ -368,22 +362,6 @@ Zdarzenia $A_1, A_2, A_3, \dots$ są niezależne $\iff$\ dla każdego $n \ge 2$ 
 \section{Zmienne losowe}
 Zamiast bezpośrednio operować na zdarzeniach, często wygodniej jest przypisać wynikom doświadczenia losowego wartości liczbowe za pomocą zmiennych losowych.
 
-\begin{Def}[$\sigma$-ciało borelowskie]
-  Najmniejsze $\sigma$-ciało w zbiorze $\mathbb{R}$ zawierające wszystkie przedziały otwarte nazywamy $\sigma$-ciałem borelowskim i oznaczamy przez $\mathcal{B}(\mathbb{R})$.
-\end{Def}
-
-\begin{Def}[Funkcja mierzalna]
-Niech $(X,\mathcal{E})$ będzie przestrzenią mierzalną.
-Funkcja
-\[
-f \colon (\Omega,\mathcal{F}) \longrightarrow (E,\mathcal{E})
-\]jest mierzalna jeżeli
-\[
-\forall\, B \in \mathcal{E} \qquad
-f^{-1}(B)=\{\omega \in \Omega : f(\omega) \in B\}\in\mathcal{F}.
-\]
-\end{Def}
-
 \begin{Def}[Wektor losowy]
 Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną. 
 Funkcja $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest wektorem losowym jeżeli jest ona funkcją mierzalną względem $\sigma$-algebry $\mathcal{F}$
@@ -395,47 +373,12 @@ dla każdego zbioru borelowskiego $B \in \mathcal{B}(\mathbb{R}^n)$.
 \textbf{Zmienna losowa} jest jednowymiarowym wektorem losowym.
 \end{Def}
 
-\begin{Prz}
-\[
-\Omega = \{1,2,3,4,5,6\} \times \{1,2,3,4,5,6\}.
-\]
-
-\[
-X \colon \Omega \longrightarrow \mathbb{R}, \qquad
-X(k,l) = k + l.
-\]
-
-\end{Prz}
-
 \begin{Def}[Rozkład wektora losowego]
     Rozkład wektora losowego $X \colon \Omega \longrightarrow \mathbb{R}^n$ jest to rozkład określony wzorem:
 \[
 P_X(B) = P(X^{-1}(B)), \quad \text{ dla } B \in \mathcal{B}(\mathbb{R}^n).
 \]
 \end{Def}
-
-\chapter{Łańcuchy Markowa}
-
-W tym rozdziale formalnie zdefiniujemy dyskretne łańcuchy Markowa i zbadamy ich podstawowe właściwości.
-
-\begin{Def}[Łańcuch Markowa]
-Niech $(\Omega,\mathcal F,\mathbb P)$ będzie przestrzenią probabilistyczną, a 
-$(X_n)_{n\ge 0}$ — ciągiem zmiennych losowych przyjmujących wartości w skończonym
-lub przeliczalnym zbiorze stanów $S$.  
-Ciąg ten nazywamy \emph{(jednorodnym) łańcuchem Markowa} wtedy i tylko wtedy, gdy
-dla każdego $n\in\mathbb N$ oraz wszystkich $i_0,\ldots,i_{n-1},i,j\in S$ zachodzi
-\[
-  \mathbb P\!\bigl(X_{n+1}=j \;\big|\;
-      X_0=i_0,\ldots,X_{n-1}=i_{n-1},X_n=i\bigr)
-    \;=\;
-  \mathbb P\!\bigl(X_{n+1}=j \mid X_n=i\bigr)
-    \;=\; p_{ij},
-\]
-gdzie $p_{ij}$ zależą jedynie od bieżącego stanu $i$ i stanu $j$, lecz nie od $n$.
-Macierz $P=(p_{ij})_{i,j\in S}$ nazywamy \emph{macierzą przejścia} łańcucha Markowa.
-\end{Def}
-
-
 
 
 
