@@ -37,6 +37,7 @@
 \newtheorem{Def}{Definicja}
 \newtheorem{Prz}{Przykład}
 \newtheorem{Dow}{Dowód}
+\newtheorem{Ozn}{Oznaczenie}
 % instrukcja poniżej: wybór czcionki z pakietu 'lmodern' jako domyślnej
 \fontfamily{lmr}\selectfont % wybór czcionki "Latin Modern Roman"
 
@@ -154,6 +155,12 @@ Praca koncentruje się na podstawowych koncepcjach i własnościach łańcuchów
 
 Podstawą formalnego opisu zjawisk losowych jest pojęcie przestrzeni probabilistycznej. Jest to matematyczna struktura, która pozwala na precyzyjne definiowanie zdarzeń i przypisywanie im prawdopodobieństw.
 
+\begin{Def}[Doświadczenie losowe]
+Doświadczeniem losowym nazywamy procedurę, którą możemy wielokrotnie powtarzać w identycznych
+warunkach i której wyników nie da się przewidzieć z pewnością
+przed jej wykonaniem, lecz można opisać je probabilistycznie.
+\end{Def}
+
 
 \begin{Def}[Przestrzeń zdarzeń elementarnych $\Omega$] Jest to zbiór wszystkich możliwych, wzajemnie wykluczających się wyników danego doświadczenia losowego. Elementy zbioru $\Omega$ nazywamy zdarzeniami elementarnymi.
 \end{Def}
@@ -164,9 +171,14 @@ Podstawą formalnego opisu zjawisk losowych jest pojęcie przestrzeni probabilis
     Dla pomiaru czasu życia żarówki $\Omega = [0, \infty)$ (lub $\mathbb{R}_{\ge 0}$), czyli zbiór wszystkich nieujemnych liczb rzeczywistych.
 \end{Prz}
 
+\begin{Ozn}
+Niech X będzie zbiorem. Przez $\mathcal{P}(X)$ będziemy oznaczać rodzinę wszystkich podzbiorów zbioru X.
+\end{Ozn}
 
-\begin{Def}[$\sigma$-ciało zdarzeń $\mathcal{F}$]
-Jest to rodzina podzbiorów przestrzeni $\Omega$ (czyli zdarzeń), która spełnia następujące warunki:
+\begin{Def}[$\sigma$-ciało]
+Niech $\Omega$ będzie niepustym zbiorem.  Zbiór
+$\mathcal{F}\subseteq \mathcal{P}(X)$ nazywamy \emph{$\sigma$-ciałem}
+na~$\Omega$, jeżeli spełnia warunki:
     \begin{enumerate}
         \item $\Omega \in \mathcal{F}$ (cała przestrzeń zdarzeń elementarnych jest zdarzeniem).
         \item Jeżeli $A \in \mathcal{F}$, to $\Omega \setminus A \in \mathcal{F}$ (jeśli $A$ jest zdarzeniem to jego dopełnienie również jest zdarzeniem).
@@ -178,12 +190,18 @@ Jest to rodzina podzbiorów przestrzeni $\Omega$ (czyli zdarzeń), która spełn
             Dla rzutu kostką $\mathcal{F}$ może być zbiorem wszystkich możliwych podzbiorów $\Omega$, np. zdarzenie "wypadła parzysta liczba oczek" to $\{2,4,6\}$
 \end{Prz}
 
+\begin{Def}[Przestrzeń mierzalna]
+Parę $\bigl(\Omega,\mathcal{F}\bigr)$, gdzie $\Omega$ jest zbiorem,
+zaś $\mathcal{F}$ –~$\sigma$-ciałem na~$\Omega$, nazywamy
+przestrzenią mierzalną.
+\end{Def}
+
 \begin{Def}[Miara probabilistyczna P]
 Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A \in \mathcal{F}$ liczbę $P(A)$, zwaną prawdopodobieństwem zdarzenia $A$, która spełnia następujące aksjomaty (aksjomaty Kołmogorowa):
 \begin{enumerate}
     \item $P(A) \ge 0$ dla każdego $A \in \mathcal{F}$.
     \item $P(\Omega) = 1$.
-    \item Dla dowolnego ciągu parami rozłącznych zdarzeń $A_1, A_2, \dots \in \mathcal{F}$ (tzn. $A_i \cap A_j = \emptyset$ dla $i \neq j$), zachodzi:
+    \item Dla dowolnego ciągu parami rozłącznych zdarzeń $A_1, A_2, \dots$ $\in \mathcal{F}$ (tzn. $A_i \cap A_j = \emptyset$ dla $i \neq j$), zachodzi:
     $$P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i) \quad (\text{przeliczalna addytywność})$$
 \end{enumerate}
 \end{Def}
@@ -193,14 +211,36 @@ Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A
 \end{Def}
 
 \begin{Prz}
-    \[
-\Omega = \{1,2,3,4,5,6\},\quad
-\mathcal F = 2^{\Omega},\quad
-\mathbb P(A) = \frac{|A|}{6},\; A\subseteq\Omega.
-\]
-
+  \[
+    \Omega=\{1,2,3,4,5\},\qquad
+    \mathcal{F}=\mathcal{P}(\Omega),\qquad
+    \mathbb{P}(A)=\frac{|A|}{5},\; A\subseteq\Omega.
+  \]
 \end{Prz}
 
+Rozpatrujemy rosyjską ruletkę z pięciokomorowym rewolwerem, w którym
+jedna z komór (niech będzie to ~\(\omega=1\)) zawiera nabój.
+Cylinder zostaje zakręcony, a więc po zatrzymaniu dowolna komora
+\(\omega\in\{1,\dots,5\}\) może znaleźć się pod kurkiem
+z jednakowym prawdopodobieństwem.
+
+\begin{itemize}
+  \item \emph{Przestrzeń zdarzeń elementarnych} \(\Omega\) indeksuje komorę,
+        która ustawi się w pozycji strzału.
+  \item \emph{Zbiór zdarzeń} \(\mathcal{F}=\mathcal{P}(\Omega)\)
+        to wszystkie możliwe podzbiory \(\Omega\),
+        np.\ zdarzenie śmiertelne to \(\{1\}\),
+        a zdarzenie „przeżycie” to \(\{2,3,4,5\}\).
+  \item \emph{Miara prawdopodobieństwa} \(\mathbb{P}\) jest jednostajna,
+        gdyż cylinder kręci się swobodnie, dlatego
+        \[
+          \mathbb{P}(\{1\})=\frac15, \qquad
+          \mathbb{P}(\{2,3,4,5\})=\frac45.
+        \]
+\end{itemize}
+
+Tak zdefiniowana trójka \((\Omega,\mathcal{F},\mathbb{P})\)
+spełnia aksjomaty Kołmogorowa i stanowi pełny opis tego doświadczenia losowego.
 
 
 \vspace{3mm}
@@ -209,7 +249,25 @@ Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A
 \begin{enumerate}
     \item $\emptyset \in \mathcal{F}$, bo $\emptyset = \Omega \setminus \Omega$.
 
-    \item Jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$, to $\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$, co wynika z praw de Morgana.
+    \item Jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$, to $\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$, 
+
+
+Niech $(A_i)_{i\in\mathbb N}\subset\mathcal F$.
+\begin{enumerate}
+  \item Ponieważ $\mathcal F$ jest $\sigma$-ciałem, z~$A_i\in\mathcal F$ wynika 
+        $A_i^{\,c}\in\mathcal F$ dla każdego $i$ (zamknięcie na dopełnienia).
+  \item Znów z definicji $\sigma$-ciała otrzymujemy 
+        $\displaystyle\bigcup_{i=1}^\infty A_i^{\,c}\in\mathcal F$
+        (zamknięcie na przeliczalne sumy).
+  \item Skoro $\mathcal F$ jest zamknięte na dopełnienie, to
+        $\displaystyle\Bigl(\bigcup_{i=1}^\infty A_i^{\,c}\Bigr)^{\!c}\in\mathcal F$.
+  \item Z praw de Morgana mamy
+        \[
+          \Bigl(\bigcup_{i=1}^\infty A_i^{\,c}\Bigr)^{\!c}
+          =\bigcap_{i=1}^\infty A_i,
+        \]
+        a zatem $\displaystyle\bigcap_{i=1}^\infty A_i\in\mathcal F$.
+\end{enumerate}
 
     \item $P(\emptyset) = 0$, bo $P(\emptyset) = P\left(\bigcup_{i=1}^{\infty} \emptyset\right) = \sum_{i=1}^{\infty} P(\emptyset)$.
 
