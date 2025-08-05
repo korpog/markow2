@@ -177,7 +177,7 @@ Niech X będzie zbiorem. Przez $\mathcal{P}(X)$ będziemy oznaczać rodzinę wsz
 
 \begin{Def}[$\sigma$-ciało]
 Niech $\Omega$ będzie niepustym zbiorem.  Zbiór
-$\mathcal{F}\subseteq \mathcal{P}(X)$ nazywamy \emph{$\sigma$-ciałem}
+$\mathcal{F}\subseteq \mathcal{P}(\Omega)$ nazywamy \emph{$\sigma$-ciałem}
 na~$\Omega$, jeżeli spełnia warunki:
     \begin{enumerate}
         \item $\Omega \in \mathcal{F}$ (cała przestrzeń zdarzeń elementarnych jest zdarzeniem).
@@ -252,7 +252,7 @@ spełnia aksjomaty Kołmogorowa i stanowi pełny opis tego doświadczenia losowe
     \item Jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$, to $\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$, 
 
 
-Niech $(A_i)_{i\in\mathbb N}\subset\mathcal F$.
+Niech $(A_i)_{i\in\mathbb N}\subset\mathcal F$, $A_i^{\,c}$ - dopełnienie zbioru $A_i$.
 \begin{enumerate}
   \item Ponieważ $\mathcal F$ jest $\sigma$-ciałem, z~$A_i\in\mathcal F$ wynika 
         $A_i^{\,c}\in\mathcal F$ dla każdego $i$ (zamknięcie na dopełnienia).
@@ -274,6 +274,8 @@ Niech $(A_i)_{i\in\mathbb N}\subset\mathcal F$.
     \item Jeżeli zbiory $A_1, A_2, A_3, \dots, A_n \in \mathcal{F}$ oraz $A_i \cap A_j = \emptyset$ dla $i \neq j$, to:
     $P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)$, bo $P\left(\bigcup_{i=1}^{n} A_i\right) = P\left(\bigcup_{i=1}^{\infty} A_i\right)$, gdzie $A_i = \emptyset$ dla $i > n$.
 
+    
+
     \item Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
     \[ P(B) = P(A) + P(B \setminus A), \] bo $B = A \cup (B \setminus A)$.
 
@@ -286,18 +288,6 @@ Niech $(A_i)_{i\in\mathbb N}\subset\mathcal F$.
     \[ P(A \cup B) = P(A) + P(B) - P(A \cap B), \] bo $A \cup B = (A \setminus B) \cup (B \setminus A) \cup (A \cap B)$
 \end{enumerate}
 
-\noindent\textbf{Własności ciągów zdarzeń:}
-\begin{enumerate}
-    \item Dla dowolnych zdarzeń $A_1, A_2, A_3, \dots$:
-    \[ P\left(\bigcup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P(A_i), \]
-    bo $\bigcup_{i=1}^{\infty} A_i = \bigcup_{i=1}^{\infty} B_i$ – suma zbiorów rozłącznych, gdzie
-    $B_1 = A_1$, $B_2 = A_2 \setminus A_1$, $B_3 = A_3 \setminus (A_1 \cup A_2)$, \dots.
-
-    \item Jeżeli $P(A_i) = 0$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcup_{i=1}^{n} A_i\right) = 0$.
-
-    \item Jeżeli $P(A_i) = 1$, $i = 1, \dots n$, $n \leq \infty$, to $P\left(\bigcap_{i=1}^{n} A_i\right) = 1$. \\
-    co wynika z praw de Morgana.
-\end{enumerate}
 
 \section{Prawdopodobieństwo warunkowe i niezależność}
 Często interesuje nas prawdopodobieństwo zajścia jednego zdarzenia pod warunkiem, że zaszło inne zdarzenie. Pojęcie to jest sformalizowane przez prawdopodobieństwo warunkowe.
@@ -514,44 +504,141 @@ Ponieważ $P(X=k, Y=l) = P(X=k) \cdot P(Y=l)$ dla wszystkich możliwych wartośc
 
 W tym rozdziale formalnie zdefiniujemy łańcuchy Markowa i zbadamy ich podstawowe właściwości.
 
-\section{Definicja}
 
 \begin{Def}[Jednorodny łańcuch Markowa]
-Niech $(\Omega,\mathcal F,\mathbb P)$ będzie przestrzenią probabilistyczną, a 
+Niech $(\Omega,\mathcal F, P)$ będzie przestrzenią probabilistyczną, a 
 $(X_n)_{n\ge 0}$ — ciągiem zmiennych losowych przyjmujących wartości w skończonym
 lub przeliczalnym zbiorze stanów $S$.  
 Ciąg ten nazywamy \emph{(jednorodnym) łańcuchem Markowa} wtedy i tylko wtedy, gdy
 dla każdego $n\in\mathbb N$ oraz wszystkich $i_0,\ldots,i_{n-1},i,j\in S$ zachodzi
 \[
-  \mathbb P\!\bigl(X_{n+1}=j \;\big|\;
+  P\!\bigl(X_{n+1}=j \;\big|\;
       X_0=i_0,\ldots,X_{n-1}=i_{n-1},X_n=i\bigr)
     \;=\;
-  \mathbb P\!\bigl(X_{n+1}=j \mid X_n=i\bigr)
+  P\!\bigl(X_{n+1}=j \mid X_n=i\bigr)
     \;=\; p_{ij},
 \]
 gdzie $p_{ij}$ zależą jedynie od bieżącego stanu $i$ i stanu $j$, lecz nie od $n$.
 Macierz $P=(p_{ij})_{i,j\in S}$ nazywamy \emph{macierzą przejścia} łańcucha Markowa.
 \end{Def}
 
-\begin{Prz}
-Rozważmy prosty model pogody. Zbiór stanów to $S = \{\text{Słonecznie, Deszczowo}\}$.
-Niech $X_n$ będzie zmienną losową opisującą pogodę w dniu $n$. Zakładamy, że pogoda w danym dniu zależy tylko od pogody w dniu poprzednim. Jest to więc jednorodny łańcuch Markowa.
+\section{Macierz przejścia}
 
-Prawdopodobieństwa przejścia między stanami są następujące:
-\begin{itemize}
-    \item Jeśli dzisiaj jest słonecznie, to prawdopodobieństwo, że jutro też będzie słonecznie, wynosi $p_{11} = 0.8$, a że będzie deszczowo, wynosi $p_{12} = 0.2$.
-    \item Jeśli dzisiaj jest deszczowo, to prawdopodobieństwo, że jutro będzie słonecznie, wynosi $p_{21} = 0.4$, a że nadal będzie deszczowo, wynosi $p_{22} = 0.6$.
-\end{itemize}
-Macierz przejścia $P$ dla tego łańcucha Markowa ma postać:
-\[
-P = \begin{pmatrix}
-0.8 & 0.2 \\
-0.4 & 0.6
-\end{pmatrix}
-\]
-gdzie wiersze i kolumny odpowiadają stanom Słonecznie i Deszczowo. Własność Markowa jest tu spełniona, ponieważ prawdopodobieństwo stanu pogody w dniu $n+1$ zależy wyłącznie od stanu w dniu $n$.
+Macierz przejścia jest fundamentalnym narzędziem do opisu łańcuchów Markowa. Zawiera ona wszystkie informacje o prawdopodobieństwach przejścia między stanami, co pozwala na pełną charakterystykę procesu stochastycznego.
+
+\begin{Def}[Macierz przejścia]
+Niech $(X_n)_{n \geq 0}$ będzie łańcuchem Markowa ze skończonym lub przeliczalnym zbiorem stanów $S$. Macierzą przejścia nazywamy macierz $P = (p_{ij})_{i,j \in S}$, gdzie:
+$$p_{ij} = P(X_{n+1} = j | X_n = i)$$
+dla wszystkich $i, j \in S$ i $n \geq 0$.
+\end{Def}
+
+Macierz przejścia musi spełniać następujące warunki:
+\begin{enumerate}
+    \item $p_{ij} \geq 0$ dla wszystkich $i, j \in S$ (nieujemność prawdopodobieństw),
+    \item $\sum_{j \in S} p_{ij} = 1$ dla wszystkich $i \in S$ (warunek normalizacji).
+\end{enumerate}
+
+Macierz spełniającą powyższe warunki nazywamy \textbf{macierzą stochastyczną}. Oznacza to, że suma elementów w każdym wierszu wynosi 1.
+
+\begin{Prz}[Spacer losowy na prostej]
+Rozważmy cząstkę poruszającą się po liczbach całkowitych $\mathbb{Z}$. W każdym kroku czasowym cząstka przesuwa się o jedną pozycję w prawo z prawdopodobieństwem $p$ lub o jedną pozycję w lewo z prawdopodobieństwem $q = 1-p$. Jest to przykład łańcucha Markowa zwanego spacerem losowym.
+
+Dla dowolnego stanu $i \in \mathbb{Z}$ mamy:
+\begin{align}
+p_{i,i+1} &= p \\
+p_{i,i-1} &= q = 1-p \\
+p_{i,j} &= 0 \text{ dla } j \neq i-1, i+1
+\end{align}
+
+Fragment macierzy przejścia wygląda następująco:
+$$P = \begin{pmatrix}
+\ddots & \ddots & \ddots & \ddots & \ddots \\
+\ddots & 0 & q & 0 & p & 0 & \ddots \\
+\ddots & 0 & 0 & q & 0 & p & \ddots \\
+\ddots & p & 0 & 0 & q & 0 & \ddots \\
+\ddots & 0 & p & 0 & 0 & q & \ddots \\
+\ddots & \ddots & \ddots & \ddots & \ddots
+\end{pmatrix}$$
 \end{Prz}
 
+\subsection{Prawdopodobieństwa przejścia w $n$ krokach}
+
+Często interesuje nas prawdopodobieństwo przejścia z jednego stanu do drugiego w określonej liczbie kroków.
+
+\begin{Def}[Prawdopodobieństwa przejścia w $n$ krokach]
+Dla łańcucha Markowa $(X_n)_{n \geq 0}$ definiujemy:
+$$p_{ij}^{(n)} = P(X_{m+n} = j | X_m = i)$$
+dla $m, n \geq 0$ i $i, j \in S$. Wielkość $p_{ij}^{(n)}$ oznacza prawdopodobieństwo przejścia ze stanu $i$ do stanu $j$ w dokładnie $n$ krokach.
+\end{Def}
+
+Zauważmy, że $p_{ij}^{(1)} = p_{ij}$ (przejście w jednym kroku) oraz $p_{ij}^{(0)} = \delta_{ij}$ (symbol Kroneckera), gdzie $\delta_{ij} = 1$ jeśli $i = j$ i $\delta_{ij} = 0$ w przeciwnym przypadku.
+
+\begin{Tw}[Równania Chapmana-Kołmogorowa]
+Dla łańcucha Markowa ze zbiorem stanów $S$ i dowolnych $m, n \geq 0$ oraz $i, j \in S$ zachodzi:
+$$p_{ij}^{(m+n)} = \sum_{k \in S} p_{ik}^{(m)} p_{kj}^{(n)}$$
+\end{Tw}
+
+\begin{Dow}
+Korzystając z własności Markowa i wzoru na prawdopodobieństwo całkowite:
+\begin{align}
+p_{ij}^{(m+n)} &= P(X_{m+n} = j | X_0 = i) \\
+&= \sum_{k \in S} P(X_{m+n} = j | X_m = k, X_0 = i) P(X_m = k | X_0 = i) \\
+&= \sum_{k \in S} P(X_{m+n} = j | X_m = k) P(X_m = k | X_0 = i) \\
+&= \sum_{k \in S} p_{kj}^{(n)} p_{ik}^{(m)}
+\end{align}
+gdzie w trzecim przejściu wykorzystaliśmy własność Markowa.
+\end{Dow}
+
+\textbf{Interpretacja macierzowa:} Równania Chapmana-Kołmogorowa oznaczają, że macierz prawdopodobieństw przejścia w $n$ krokach jest równa $n$-tej potędze macierzy przejścia:
+$$P^{(n)} = (p_{ij}^{(n)})_{i,j \in S} = P^n$$
+
+\subsection{Grafy przejścia}
+
+Graficzną reprezentacją łańcucha Markowa jest graf przejścia, który pozwala na intuicyjne zrozumienie struktury procesu.
+
+\begin{Def}[Graf przejścia]
+Graf przejścia łańcucha Markowa to graf skierowany $G = (V, E)$, gdzie:
+\begin{itemize}
+    \item $V = S$ (wierzchołki odpowiadają stanom),
+    \item $(i, j) \in E$ wtedy i tylko wtedy, gdy $p_{ij} > 0$ (krawędź istnieje, gdy przejście jest możliwe).
+\end{itemize}
+Każda krawędź $(i, j)$ jest etykietowana prawdopodobieństwem $p_{ij}$.
+\end{Def}
+
+
+\begin{Prz}[Spacer losowy z barierami odbijającymi]
+Rozważmy spacer losowy na zbiorze $\{0, 1, 2, 3, 4\}$ z barierami odbijającymi na końcach. Cząstka w stanie 0 zawsze przechodzi do stanu 1, w stanie 4 zawsze do stanu 3, a w stanach wewnętrznych przechodzi w prawo z prawdopodobieństwem $p = 0.6$ i w lewo z prawdopodobieństwem $q = 0.4$.
+
+Macierz przejścia:
+$$P = \begin{pmatrix}
+0 & 1 & 0 & 0 & 0 \\
+0.4 & 0 & 0.6 & 0 & 0 \\
+0 & 0.4 & 0 & 0.6 & 0 \\
+0 & 0 & 0.4 & 0 & 0.6 \\
+0 & 0 & 0 & 1 & 0
+\end{pmatrix}$$
+
+Graf przejścia:
+
+\begin{center}
+\begin{tikzpicture}[node distance=2.5cm, every node/.style={circle, draw, minimum size=1cm}]
+    \node (0) {0};
+    \node (1) [right of=0] {1};
+    \node (2) [right of=1] {2};
+    \node (3) [right of=2] {3};
+    \node (4) [right of=3] {4};
+    
+    \draw [->, bend left=15] (0) to node[above] {1} (1);
+    \draw [->, bend left=15] (1) to node[above] {0.6} (2);
+    \draw [->, bend left=15] (1) to node[below] {0.4} (0);
+    \draw [->, bend left=15] (2) to node[above] {0.6} (3);
+    \draw [->, bend left=15] (2) to node[below] {0.4} (1);
+    \draw [->, bend left=15] (3) to node[above] {0.6} (4);
+    \draw [->, bend left=15] (3) to node[below] {0.4} (2);
+    \draw [->, bend left=15] (4) to node[below] {1} (3);
+\end{tikzpicture}
+\end{center}
+\end{Prz}
 
 
 
