@@ -196,7 +196,7 @@ zaś $\mathcal{F}$ –~$\sigma$-ciałem na~$\Omega$, nazywamy
 przestrzenią mierzalną.
 \end{Def}
 
-\begin{Def}[Miara probabilistyczna P]
+\begin{Def}[Miara prawdopodobieństwa P]
 Jest to funkcja $P: \mathcal{F} \to [0, 1]$, przypisująca każdemu zdarzeniu $A \in \mathcal{F}$ liczbę $P(A)$, zwaną prawdopodobieństwem zdarzenia $A$, która spełnia następujące aksjomaty (aksjomaty Kołmogorowa):
 \begin{enumerate}
     \item $P(A) \ge 0$ dla każdego $A \in \mathcal{F}$.
@@ -245,48 +245,176 @@ spełnia aksjomaty Kołmogorowa i stanowi pełny opis tego doświadczenia losowe
 
 \vspace{3mm}
 
-\noindent\textbf{Podstawowe własności:}
+\subsection{Podstawowe własności miary prawdopodobieństwa}
+
+Niech $(\Omega, \mathcal{F}, P)$ będzie przestrzenią probabilistyczną, gdzie:
+\begin{itemize}
+    \item $\Omega$ -- przestrzeń zdarzeń elementarnych
+    \item $\mathcal{F}$ -- $\sigma$-ciało podzbiorów $\Omega$ 
+    \item $P: \mathcal{F} \to [0,1]$ -- miara prawdopodobieństwa
+\end{itemize}
+
+\begin{Tw}[Zbiór pusty należy do $\mathcal{F}$]
+$\emptyset \in \mathcal{F}$
+\end{Tw}
+
+\begin{Dow}
+Ponieważ $\mathcal{F}$ jest $\sigma$-ciałem, to $\Omega \in \mathcal{F}$. Z definicji $\sigma$-ciała wynika również, że jeśli $A \in \mathcal{F}$, to $A^c \in \mathcal{F}$ (zamknięcie na dopełnienie).
+
+Zatem: $\emptyset = \Omega^c \in \mathcal{F}$.
+\end{Dow}
+
+\begin{Tw}[Zamknięcie na przeliczalne przecięcia]
+Jeżeli zbiory $A_1, A_2, A_3, \ldots \in \mathcal{F}$, to $\displaystyle\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$
+\end{Tw}
+
+\begin{Dow}
+Niech $(A_i)_{i\in\mathbb{N}} \subset \mathcal{F}$, gdzie $A_i^c$ oznacza dopełnienie zbioru $A_i$.
+
 \begin{enumerate}
-    \item $\emptyset \in \mathcal{F}$, bo $\emptyset = \Omega \setminus \Omega$.
-
-    \item Jeżeli zbiory $A_1, A_2, A_3, \dots \in \mathcal{F}$, to $\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$, 
-
-
-Niech $(A_i)_{i\in\mathbb N}\subset\mathcal F$, $A_i^{\,c}$ - dopełnienie zbioru $A_i$.
-\begin{enumerate}
-  \item Ponieważ $\mathcal F$ jest $\sigma$-ciałem, z~$A_i\in\mathcal F$ wynika 
-        $A_i^{\,c}\in\mathcal F$ dla każdego $i$ (zamknięcie na dopełnienia).
-  \item Znów z definicji $\sigma$-ciała otrzymujemy 
-        $\displaystyle\bigcup_{i=1}^\infty A_i^{\,c}\in\mathcal F$
-        (zamknięcie na przeliczalne sumy).
-  \item Skoro $\mathcal F$ jest zamknięte na dopełnienie, to
-        $\displaystyle\Bigl(\bigcup_{i=1}^\infty A_i^{\,c}\Bigr)^{\!c}\in\mathcal F$.
-  \item Z praw de Morgana mamy
-        \[
-          \Bigl(\bigcup_{i=1}^\infty A_i^{\,c}\Bigr)^{\!c}
-          =\bigcap_{i=1}^\infty A_i,
-        \]
-        a zatem $\displaystyle\bigcap_{i=1}^\infty A_i\in\mathcal F$.
-\end{enumerate}
-
-    \item $P(\emptyset) = 0$, bo $P(\emptyset) = P\left(\bigcup_{i=1}^{\infty} \emptyset\right) = \sum_{i=1}^{\infty} P(\emptyset)$.
-
-    \item Jeżeli zbiory $A_1, A_2, A_3, \dots, A_n \in \mathcal{F}$ oraz $A_i \cap A_j = \emptyset$ dla $i \neq j$, to:
-    $P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)$, bo $P\left(\bigcup_{i=1}^{n} A_i\right) = P\left(\bigcup_{i=1}^{\infty} A_i\right)$, gdzie $A_i = \emptyset$ dla $i > n$.
-
+    \item Ponieważ $\mathcal{F}$ jest $\sigma$-ciałem, z $A_i \in \mathcal{F}$ wynika $A_i^c \in \mathcal{F}$ dla każdego $i$ (zamknięcie na dopełnienia).
     
-
-    \item Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
-    \[ P(B) = P(A) + P(B \setminus A), \] bo $B = A \cup (B \setminus A)$.
-
-    \item Dla każdego zdarzenia $A$: \[ P(\Omega\setminus A) = 1 - P(A) \]
-
-    \item Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
-    \[ P(A) \leq P(B), \]
-
-    \item Dla dowolnych zdarzeń $A$ i $B$:
-    \[ P(A \cup B) = P(A) + P(B) - P(A \cap B), \] bo $A \cup B = (A \setminus B) \cup (B \setminus A) \cup (A \cap B)$
+    \item Znów z definicji $\sigma$-ciała otrzymujemy:
+    $$\bigcup_{i=1}^{\infty} A_i^c \in \mathcal{F}$$
+    (zamknięcie na przeliczalne sumy).
+    
+    \item Skoro $\mathcal{F}$ jest zamknięte na dopełnienie, to:
+    $$\left(\bigcup_{i=1}^{\infty} A_i^c\right)^c \in \mathcal{F}$$
+    
+    \item Z praw de Morgana mamy:
+    $$\left(\bigcup_{i=1}^{\infty} A_i^c\right)^c = \bigcap_{i=1}^{\infty} A_i$$
 \end{enumerate}
+
+Zatem $\displaystyle\bigcap_{i=1}^{\infty} A_i \in \mathcal{F}$.
+\end{Dow}
+
+\begin{Tw}[Prawdopodobieństwo zbioru pustego]
+$P(\emptyset) = 0$
+\end{Tw}
+
+\begin{Dow}
+Rozważmy przeliczalną sumę zbiorów pustych:
+$$P(\emptyset) = P\left(\bigcup_{i=1}^{\infty} \emptyset\right)$$
+
+Ponieważ zbiory $\emptyset$ są parami rozłączne, z $\sigma$-addytywności miary $P$ wynika:
+$$P\left(\bigcup_{i=1}^{\infty} \emptyset\right) = \sum_{i=1}^{\infty} P(\emptyset)$$
+
+Jeśli $P(\emptyset) = a > 0$, to szereg $\sum_{i=1}^{\infty} a$ byłby rozbieżny do $+\infty$, co przeczy temu, że $P(\emptyset) \in [0,1]$.
+
+Zatem $P(\emptyset) = 0$.
+\end{Dow}
+
+\begin{Tw}[Skończona addytywność]
+Jeżeli zbiory $A_1, A_2, \ldots, A_n \in \mathcal{F}$ oraz $A_i \cap A_j = \emptyset$ dla $i \neq j$, to:
+$$P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)$$
+\end{Tw}
+
+\begin{Dow}
+Definiujemy ciąg $(B_i)_{i=1}^{\infty}$ następująco:
+\begin{itemize}
+    \item $B_i = A_i$ dla $i \leq n$
+    \item $B_i = \emptyset$ dla $i > n$
+\end{itemize}
+
+Zbiory $B_i$ są parami rozłączne i $\displaystyle\bigcup_{i=1}^{n} A_i = \bigcup_{i=1}^{\infty} B_i$.
+
+Z $\sigma$-addytywności:
+$$P\left(\bigcup_{i=1}^{n} A_i\right) = P\left(\bigcup_{i=1}^{\infty} B_i\right) = \sum_{i=1}^{\infty} P(B_i) = \sum_{i=1}^{n} P(A_i) + \sum_{i=n+1}^{\infty} P(\emptyset)$$
+
+Ponieważ $P(\emptyset) = 0$, otrzymujemy:
+$$P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)$$
+\end{Dow}
+
+\begin{Tw}[Monotoniczność względem różnicy]
+Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
+$$P(B) = P(A) + P(B \setminus A)$$
+\end{Tw}
+
+\begin{Dow}
+Jeśli $A \subset B$, to można przedstawić $B$ jako sumę rozłączną:
+$$B = A \cup (B \setminus A)$$
+
+Ponieważ $A \cap (B \setminus A) = \emptyset$, z skończonej addytywności:
+$$P(B) = P(A \cup (B \setminus A)) = P(A) + P(B \setminus A)$$
+\end{Dow}
+
+\begin{Tw}[Prawdopodobieństwo dopełnienia]
+Dla każdego zdarzenia $A$:
+$$P(\Omega \setminus A) = 1 - P(A)$$
+\end{Tw}
+
+\begin{Dow}
+Mamy $\Omega = A \cup (\Omega \setminus A)$ oraz $A \cap (\Omega \setminus A) = \emptyset$.
+
+Z skończonej addytywności:
+$$P(\Omega) = P(A) + P(\Omega \setminus A)$$
+
+Ponieważ $P(\Omega) = 1$ (z definicji miary prawdopodobieństwa):
+$$1 = P(A) + P(\Omega \setminus A)$$
+
+Stąd: $P(\Omega \setminus A) = 1 - P(A)$
+\end{Dow}
+
+\begin{Tw}[Monotoniczność miary]
+Jeżeli $A$ i $B$ są takimi zdarzeniami, że $A \subset B$, to:
+$$P(A) \leq P(B)$$
+\end{Tw}
+
+\begin{Dow}
+Z Twierdzenia 5 wiemy, że jeśli $A \subset B$, to:
+$$P(B) = P(A) + P(B \setminus A)$$
+
+Ponieważ $P(B \setminus A) \geq 0$ (prawdopodobieństwo jest nieujemne), otrzymujemy:
+$$P(B) = P(A) + P(B \setminus A) \geq P(A)$$
+
+Zatem $P(A) \leq P(B)$.
+\end{Dow}
+
+\begin{Tw}[Zasada włączeń-wyłączeń dla dwóch zbiorów]
+Dla dowolnych zdarzeń $A$ i $B$:
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+\end{Tw}
+
+\begin{Dow}
+Zauważmy, że
+\[
+A\cup B = (A\setminus B)\;\cup\;(B\setminus A)\;\cup\;(A\cap B),
+\]
+gdzie te trzy zbiory są parami rozłączne. Z własności skończonej addytywności mamy:
+\[
+P(A\cup B)
+= P(A\setminus B) + P(B\setminus A) + P(A\cap B).
+\]
+
+Ponadto:
+\[
+A = (A\setminus B)\cup(A\cap B)
+\quad\Longrightarrow\quad
+P(A) = P(A\setminus B) + P(A\cap B),
+\]
+\[
+B = (B\setminus A)\cup(A\cap B)
+\quad\Longrightarrow\quad
+P(B) = P(B\setminus A) + P(A\cap B).
+\]
+Stąd:
+\[
+P(A\setminus B) = P(A) - P(A\cap B),
+\qquad
+P(B\setminus A) = P(B) - P(A\cap B).
+\]
+
+Podstawiając do wzoru na \(P(A\cup B)\):
+\[
+\begin{aligned}
+P(A\cup B)
+&= \bigl[P(A) - P(A\cap B)\bigr]
+  + \bigl[P(B) - P(A\cap B)\bigr]
+  + P(A\cap B)\\
+&= P(A) + P(B) - P(A\cap B).
+\end{aligned}
+\]
+\end{Dow}
 
 
 \section{Prawdopodobieństwo warunkowe i niezależność}
@@ -302,10 +430,10 @@ Prawdopodobieństwo warunkowe $P(A|B)$ mówi nam, jak zmienia się szansa na zaj
 
 
 \begin{Tw}[Wzór na prawdopodobieństwo całkowite]
-Dana jest przestrzeń probabilistyczna $(\Omega, \mathcal{F}, P)$ oraz zdarzenia $W_1, \dots, W_n \in \mathcal{F}$ spełniające warunki:
+Dana jest przestrzeń probabilistyczna $(\Omega, \mathcal{F}, P)$ oraz zdarzenia $B_1, \dots, B_n \in \mathcal{F}$ spełniające warunki:
 \begin{enumerate}
     \item[(i)] $P(B_i) > 0$ dla każdego $i = 1, \dots, n$,
-    \item[(ii)] $B_i \cap W_j = \emptyset$ dla wszystkich $i \neq j$,
+    \item[(ii)] $B_i \cap B_j = \emptyset$ dla wszystkich $i \neq j$,
     \item[(iii)] $B_1 \cup \dots \cup B_n = \Omega$.
 \end{enumerate}
 Wtedy dla każdego zdarzenia $A \in \mathcal{F}$ zachodzi wzór:
